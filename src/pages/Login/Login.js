@@ -1,0 +1,89 @@
+import React, { Component } from "react";
+import "./Login.css";
+import { Link } from "react-router-dom";
+import callAPI from "../../utils/apiCaller";
+import Alert from "../../components/Alert/Alert";
+class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      username: "",
+      password: "",
+      error: "",
+    };
+  }
+  onUsernameChange = (event) => {
+    this.setState({ username: event.target.value });
+  };
+
+  onPasswordChange = (event) => {
+    this.setState({ password: event.target.value });
+  };
+
+  onSubmitSignIn = (event) => {
+    event.preventDefault();
+    let { username, password } = this.state;
+    callAPI("/login", "POST", {
+      username,
+      password,
+    })
+      .then((response) => {
+        // this.setState({ redirect: true });
+        console.log(response);
+      })
+      .catch((e) => {
+        this.setState({ error: e.response.data });
+        console.log(e.response);
+      });
+  };
+
+  render() {
+    let { error } = this.state;
+    let showerror = null;
+    if (error) if (error) showerror = <Alert error={error} />;
+
+    return (
+      <form onSubmit={this.onSubmitSignIn} className="loginForm">
+        <h1>Login</h1>
+        {showerror}
+        <div className="container">
+          <label>
+            <b>Username</b>
+          </label>
+          <input
+            type="text"
+            onChange={this.onUsernameChange}
+            placeholder="Enter Username"
+            required
+          />
+
+          <label>
+            <b>Password</b>
+          </label>
+          <input
+            onChange={this.onPasswordChange}
+            type="password"
+            placeholder="Enter Password"
+            required
+          />
+
+          <button type="submit">Login</button>
+        </div>
+
+        <div className="container" style={{ backgroundColor: "#f1f1f1" }}>
+          <Link to={"/"}>
+            <button type="button" className="cancelbtn">
+              Cancel
+            </button>
+          </Link>
+
+          <span className="psw">
+            Forgot <a href="/">password?</a>
+          </span>
+        </div>
+      </form>
+    );
+  }
+}
+
+export default Login;
