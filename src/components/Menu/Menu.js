@@ -3,7 +3,7 @@ import { Route, Link } from "react-router-dom";
 
 const menus = [
   { name: "Home", to: "/", exact: true },
-  { name: "Products", to: "/products", exact: true },
+  { name: "Product", to: "/product", exact: true },
   { name: "Search", to: "/search", exact: true },
   { name: "Checkout", to: "/checkout", exact: true },
   { name: "Cart", to: "/cart", exact: true },
