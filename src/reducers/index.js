@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import products from "./products";
-import editingitem from "./editingitem";
+// import products from "./products";
+// import editingitem from "./editingitem";
+import token from "./token";
 
 const appReducers = combineReducers({
-  products,
-  editingitem,
+  token,
 });
 
 export default appReducers;

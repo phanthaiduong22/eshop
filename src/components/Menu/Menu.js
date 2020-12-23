@@ -9,6 +9,7 @@ const menus = [
   { name: "Cart", to: "/cart", exact: true },
   { name: "Login", to: "/login", exact: true },
   { name: "Register", to: "/register", exact: true },
+  { name: "Info", to: "/info", exact: true },
 ];
 
 const MenuLink = ({ label, to, activeOnlyWhenExact }) => {

@@ -3,6 +3,7 @@ import "./Login.css";
 import { Link } from "react-router-dom";
 import callAPI from "../../utils/apiCaller";
 import Alert from "../../components/Alert/Alert";
+import { connect } from "react-redux";
 class Login extends Component {
   constructor() {
     super();
@@ -10,8 +11,15 @@ class Login extends Component {
       username: "",
       password: "",
       error: "",
+      token: "",
     };
   }
+
+  componentDidMount = () => {
+    let token = localStorage.getItem("token");
+    this.setState({ token });
+  };
+
   onUsernameChange = (event) => {
     this.setState({ username: event.target.value });
   };
@@ -29,7 +37,8 @@ class Login extends Component {
     })
       .then((response) => {
         // this.setState({ redirect: true });
-        console.log(response);
+        let token = response.data;
+        localStorage.setItem("token", token);
       })
       .catch((e) => {
         this.setState({ error: e.response.data });
@@ -38,12 +47,15 @@ class Login extends Component {
   };
 
   render() {
-    let { error } = this.state;
+    let { error, token } = this.state;
     let showerror = null;
-    if (error) if (error) showerror = <Alert error={error} />;
-
+    let userLogin = null;
+    if (error) showerror = <Alert error={error} />;
+    if (token) userLogin = <h1>Already Login</h1>;
     return (
       <form onSubmit={this.onSubmitSignIn} className="loginForm">
+        {userLogin}
+
         <h1>Login</h1>
         {showerror}
         <div className="container">
@@ -86,4 +98,10 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    token: state.token,
+  };
+};
+
+export default connect(mapStateToProps, null)(Login);

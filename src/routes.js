@@ -7,6 +7,7 @@ import Checkout from "./pages/Checkout/Checkout";
 import Product from "./pages/Product/Product";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import Info from "./pages/Info/Info";
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     path: "/register",
     exact: true,
     main: () => <Register />,
+  },
+  {
+    path: "/info",
+    exact: true,
+    main: () => <Info />,
   },
   {
     path: "",
