@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import callAPI from "../../utils/apiCaller";
-import axios from "axios";
+import { Redirect } from "react-router-dom";
 class Info extends Component {
   constructor() {
     super();
@@ -10,6 +10,7 @@ class Info extends Component {
       exp: "not signed in",
       error: "",
       token: "",
+      redirect: "",
     };
   }
 
@@ -28,13 +29,31 @@ class Info extends Component {
     }
   };
 
+  onLogout = () => {
+    localStorage.setItem("token", "");
+    this.setState({ redirect: true });
+  };
+
   render() {
-    let { username, iat, exp } = this.state;
+    let { username, iat, exp, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to={redirect} />;
+    }
+
     return (
       <div>
-        <h1>{username}</h1>
-        <h1>{iat}</h1>
-        <h1>{exp}</h1>
+        <div>
+          <h1>{username}</h1>
+          <h1>{iat}</h1>
+          <h1>{exp}</h1>
+        </div>
+        <button
+          onClick={this.onLogout}
+          type="button"
+          className="btn btn-danger"
+        >
+          Logout
+        </button>
       </div>
     );
   }

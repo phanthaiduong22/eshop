@@ -32,7 +32,7 @@ class Register extends Component {
     let { username, password, repeatpassword } = this.state;
     // console.log(username, password, repeatpassword);
     if (password !== repeatpassword) {
-      this.setState({ error: "The repeat password is same with password" });
+      this.setState({ error: "The repeat password is not same with password" });
       return;
     }
     callAPI("/register", "POST", {

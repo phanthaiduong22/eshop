@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import callAPI from "../../utils/apiCaller";
 import Alert from "../../components/Alert/Alert";
 import { connect } from "react-redux";
@@ -11,13 +11,13 @@ class Login extends Component {
       username: "",
       password: "",
       error: "",
-      token: "",
+      redirect: "",
     };
   }
 
   componentDidMount = () => {
     let token = localStorage.getItem("token");
-    this.setState({ token });
+    if (token) this.setState({ redirect: "/info" });
   };
 
   onUsernameChange = (event) => {
@@ -39,6 +39,7 @@ class Login extends Component {
         // this.setState({ redirect: true });
         let token = response.data;
         localStorage.setItem("token", token);
+        this.setState({ redirect: "/info" });
       })
       .catch((e) => {
         this.setState({ error: e.response.data });
@@ -47,15 +48,12 @@ class Login extends Component {
   };
 
   render() {
-    let { error, token } = this.state;
+    let { error, redirect } = this.state;
     let showerror = null;
-    let userLogin = null;
     if (error) showerror = <Alert error={error} />;
-    if (token) userLogin = <h1>Already Login</h1>;
+    if (redirect) return <Redirect to={redirect} />;
     return (
       <form onSubmit={this.onSubmitSignIn} className="loginForm">
-        {userLogin}
-
         <h1>Login</h1>
         {showerror}
         <div className="container">

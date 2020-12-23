@@ -1,0 +1,16 @@
+.category-item {
+  width: 10%;
+  background-color: khaki;
+  float: left;
+  border: 1px solid green;
+  text-align: center;
+  font-size: 100%;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.category-item img {
+  width: 100%;
+}

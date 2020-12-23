@@ -34,7 +34,7 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
 class Menu extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-secondary">
         <Link className="navbar-brand" to="/">
           CALL API
         </Link>
