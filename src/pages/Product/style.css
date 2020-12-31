@@ -1,0 +1,81 @@
+*{
+    margin: 0px;
+    padding : 0px;
+}
+.hieu .carousel-indicators li{
+    width: 20%;
+}
+
+.hieu .info ul{
+    list-style-type: none;
+}
+
+.hieu .info .danhgia i {
+    color: orangered;
+}
+
+.hieu .rank i{
+    color: rgb(255, 174, 0);
+    font-size: 25px;
+}
+
+.hieu .rank{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.hieu .gia{
+    background-color: #f88eb28f;
+    border-radius:10px;
+    height: 80px;
+    width: 430px;
+}
+
+.hieu .vanchuyen i {
+    font-size: 22px;
+    padding: 5px;
+    display: inline-block;
+    width: 40px;
+    color: orangered;
+    text-align: center;
+}
+
+.hieu .soluong{
+    width: 100px;
+}
+
+.hieu .shop h5{
+    padding: 5px;
+}
+
+.hieu .shop .shopaction div{
+    padding: 10px;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+table td:nth-child(1){
+    background-color: rgb(216, 216, 216);
+    font-weight: bold;
+}
+
+table td{
+    padding: 10px;
+    border: groove 1px;
+}
+
+.sao .nhanxettrai .danhgia i{
+    color: orangered;
+}
+
+.hieu .nhanxettrai {
+    text-align: center;
+}
+
+.hieu .nhanxetphai .progress{
+    margin-top: 7px;
+
+}
+
+.hieu .nhanxetphai{
+    margin-left: 40px;
+}
