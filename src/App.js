@@ -10,7 +10,7 @@ class App extends Component {
       <Router>
         <div>
           <Menu />
-          <div className="container-fluid">
+          <div className="container-fluid"  style={{backgroundColor:"red"}}>
             <div className="row">{this.showContentMenus(routes)}</div>
           </div>
         </div>
