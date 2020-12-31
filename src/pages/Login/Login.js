@@ -3,7 +3,6 @@ import "./Login.css";
 import { Link, Redirect } from "react-router-dom";
 import callAPI from "../../utils/apiCaller";
 import Alert from "../../components/Alert/Alert";
-import { connect } from "react-redux";
 class Login extends Component {
   constructor() {
     super();
@@ -96,10 +95,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    token: state.token,
-  };
-};
-
-export default connect(mapStateToProps, null)(Login);
+export default Login;

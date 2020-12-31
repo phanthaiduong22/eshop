@@ -31,7 +31,7 @@ class Info extends Component {
 
   onLogout = () => {
     localStorage.setItem("token", "");
-    this.setState({ redirect: "/login" });
+    this.setState({ redirect: "/" });
   };
 
   render() {

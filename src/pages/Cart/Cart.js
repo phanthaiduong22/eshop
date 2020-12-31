@@ -55,9 +55,7 @@ class Cart extends Component {
         counting: product["counting"],
         store: product["store"],
       });
-      {
-        console.log(stores);
-      }
+      console.log(stores);
     });
 
     ProductComponents = Object.keys(stores).map((key, i) => {
@@ -103,7 +101,7 @@ class Cart extends Component {
                         </div>
                         <div className="col-md-3">
                           <div class="d-flex justify-content-center">
-                            <h5>{store["price"]+"đ"}</h5>
+                            <h5>{store["price"] + "đ"}</h5>
                           </div>
 
                           <div class="input-group">
@@ -155,8 +153,10 @@ class Cart extends Component {
           <div class="col-lg-8">
             <div>{ProductComponents}</div>
           </div>
-          <div class="col-lg-4"> <CartInfo/></div>
-         
+          <div class="col-lg-4">
+            {" "}
+            <CartInfo />
+          </div>
         </div>
       </div>
     );
