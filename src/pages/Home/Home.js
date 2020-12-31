@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./Home.css";
 import CategoryItem from "../../components/CatergoryItem/CategoryItem";
 import ProductItem from "../../components/ProductItem/ProductItem";
-import { Link } from "react-router-dom";
 class Home extends Component {
   constructor(props) {
     super();
@@ -85,8 +84,6 @@ class Home extends Component {
     });
     return (
       <>
-        {" "}
-        /*{" "}
         <div className="category">
           <h1>Category</h1>
           {categoryComponents}
@@ -94,32 +91,10 @@ class Home extends Component {
         <div className="hotdeal">
           <h1>HotDeal</h1>
           {hotdealComponents}
-        </div>{" "}
-        */
+        </div>
       </>
     );
   }
 }
 
 export default Home;
-
-/* <div className="category-item">
-          <Link
-            style={{ textDecoration: "none", color: "#000000" }}
-            to="/thoitrangnam"
-          >
-            <img src="https://cf.shopee.vn/file/687f3967b7c2fe6a134a2c11894eea4b_tn" />
-            <p>Thời Trang Nam</p>
-          </Link>
-        </div> */
-
-{
-  /* <div className="category">
-          <h1>Category</h1>
-          {categoryComponents}
-        </div>
-        <div className="hotdeal">
-          <h1>HotDeal</h1>
-          {hotdealComponents}
-        </div> */
-}

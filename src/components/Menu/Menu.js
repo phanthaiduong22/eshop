@@ -10,6 +10,7 @@ const menus = [
   { name: "Login", to: "/login", exact: true },
   { name: "Register", to: "/register", exact: true },
   { name: "Info", to: "/info", exact: true },
+  { name: "Sell", to: "/sell", exact: true },
 ];
 
 const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
