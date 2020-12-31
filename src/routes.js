@@ -8,6 +8,7 @@ import Product from "./pages/Product/Product";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Info from "./pages/Info/Info";
+import Sell from "./pages/Sell/Sell";
 
 const routes = [
   {
@@ -49,6 +50,11 @@ const routes = [
     path: "/info",
     exact: true,
     main: () => <Info />,
+  },
+  {
+    path: "/sell",
+    exact: true,
+    main: () => <Sell />,
   },
   {
     path: "",
