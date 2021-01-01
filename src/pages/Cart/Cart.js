@@ -1,75 +1,54 @@
 import React, { Component } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import CartInfo from "./CartInfo";
+import callAPI from "../../utils/apiCaller";
+import PlusMinusButton from "./PlusMinusButton";
+import "./Cart.css";
 class Cart extends Component {
   constructor(props) {
     super();
     this.state = {
-      products: [
-        {
-          imgSrc:
-            "https://images-na.ssl-images-amazon.com/images/I/61Ww4abGclL._AC_SL1000_.jpg",
-          link: "/product/1",
-          name: "Máy Đọc Sách Kindle Paperwhite Gen 10 - Hàng Nhập Khẩu",
-          price: 3600000,
-          counting: 3,
-          store: "Fahasa",
-        },
-        {
-          imgSrc:
-            "https://images-na.ssl-images-amazon.com/images/I/61Ww4abGclL._AC_SL1000_.jpg",
-          link: "/product/1",
-          name: "Máy Đọc Sách Kindle Paperwhite Gen 10 - Hàng Nhập Khẩu",
-          price: 3600000,
-          counting: 3,
-          store: "Fahasa",
-        },
-        {
-          imgSrc:
-            "https://images-na.ssl-images-amazon.com/images/I/61Ww4abGclL._AC_SL1000_.jpg",
-          link: "/product/1",
-          name: "Máy Đọc Sách Kindle Paperwhite Gen 10 - Hàng Nhập Khẩu",
-          price: 3600000,
-          counting: 3,
-          store: "Sieu thi kindle",
-        },
-      ],
+      products2: [],
     };
   }
+
+  componentDidMount = () => {
+    let token = localStorage.getItem("token");
+    /*this.setState({ token });*/
+    if (token) {
+      callAPI("/getcart", "GET", null, token)
+        .then((res) => {
+          console.log(res.data);
+          this.setState({ products2: res.data });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+    }
+  };
+
   render() {
-    let { products } = this.state;
     let ProductComponents = null;
-    let stores = {};
-
+    let stores2 = {};
     //Phan san pham theo store:
-    products.map((product, index) => {
-      if (stores[product["store"]] == null) {
-        stores[product["store"]] = [];
+    this.state.products2.map((product, index) => {
+      if (stores2[product["name"]] == null) {
+        stores2[product["name"]] = [];
       }
-      stores[product["store"]].push({
-        imgSrc: product["imgSrc"],
-        link: product["link"],
-        name: product["name"],
-        price: product["price"],
-        counting: product["counting"],
-        store: product["store"],
-      });
-      console.log(stores);
+      stores2[product["name"]].push(product);
     });
-
-    ProductComponents = Object.keys(stores).map((key, i) => {
+    ProductComponents = Object.keys(stores2).map((key, i) => {
       return (
         <div className="card" style={{ marginBottom: "10px" }}>
           <div className="card-body">
             <h6 class="card-title">{key + " >"} </h6>
-            {stores[key].map((store, index) => {
+            {stores2[key].map((store, index) => {
               return (
                 <div className="card" style={{ marginBottom: "10px" }}>
                   <div class="card-body">
-                    <div class="form-check form-check-inline">
+                    <div class="form-check">
                       <div class="row">
-                        <div className="col-md-1 my-auto">
+                        <div className="col-sm-1 my-auto col-6 col-md-1">
                           <label class="form-check-label align-middle">
                             <input
                               class="form-check-input"
@@ -77,18 +56,29 @@ class Cart extends Component {
                               name=""
                               id=""
                               value="checkedValue"
+                              checked={store.checked}
                             />
                           </label>
                         </div>
-                        <div className="col-md-2">
-                          <img
-                            src={store["imgSrc"]}
-                            alt="pic"
-                            style={{ width: "100%" }}
-                          />
+                        <div className="col-sm-4 col-6 col-md-3">
+                          <div className="image">
+                            {store["image_url"] ? (
+                              <img
+                                src={store["image_url"]}
+                                alt="pic"
+                                className="cart_product_image img-responsive full-width"
+                              />
+                            ) : (
+                              <img
+                                src="https://cdn0.iconfinder.com/data/icons/picture-sharing-sites-solid/32/No_Image-128.png"
+                                alt="pic"
+                                className="cart_product_image img-responsive full-width"
+                              />
+                            )}
+                          </div>
                         </div>
-                        <div className="col-md-6">
-                          <h6>{store["name"]}</h6>
+                        <div className="col-md-5 col-sm-7">
+                          <h6>{store["product_name"]}</h6>
                           <a
                             name=""
                             id=""
@@ -103,38 +93,7 @@ class Cart extends Component {
                           <div class="d-flex justify-content-center">
                             <h5>{store["price"] + "đ"}</h5>
                           </div>
-
-                          <div class="input-group">
-                            <span class="input-group-btn">
-                              <button
-                                type="button"
-                                class="quantity-left-minus btn btn-light btn-number"
-                                data-type="minus"
-                                data-field=""
-                              >
-                                <FontAwesomeIcon icon={faMinus} />
-                              </button>
-                            </span>
-                            <input
-                              type="text"
-                              id="quantity"
-                              name="quantity"
-                              class="form-control input-number"
-                              value={store["counting"]}
-                              min="0"
-                              max="100"
-                            />
-                            <span class="input-group-btn">
-                              <button
-                                type="button"
-                                class="quantity-right-plus btn btn-light btn-number"
-                                data-type="plus"
-                                data-field=""
-                              >
-                                <FontAwesomeIcon icon={faPlus} />
-                              </button>
-                            </span>
-                          </div>
+                          <PlusMinusButton count={store["counting"]}/>
                         </div>
                       </div>
                     </div>
