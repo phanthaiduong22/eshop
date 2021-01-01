@@ -203,7 +203,7 @@ class Checkout extends Component {
           <h3 class="text-center" style={{color:"red", fontSize:"30px", fontWeight:"bold"}}>{sumShipPrice+sumPrice} d</h3>
           
           <div class="col text-center mt-2">
-            <button type="button" class="btn btn-danger btn-lg" style={{width:"70%"}}>Thanh toan</button>
+            <button type="button" class="btn btn-danger btn-lg" style={{width:"70%", textAlign:"center"}}>Thanh toan</button>
           </div>
           
       </div>
