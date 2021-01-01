@@ -30,6 +30,7 @@ class Cart extends Component {
   render() {
     let ProductComponents = null;
     let stores2 = {};
+    let totalCost=0;
     //Phan san pham theo store:
     this.state.products2.map((product, index) => {
       if (stores2[product["name"]] == null) {
@@ -37,12 +38,14 @@ class Cart extends Component {
       }
       stores2[product["name"]].push(product);
     });
+    
     ProductComponents = Object.keys(stores2).map((key, i) => {
       return (
         <div className="card" style={{ marginBottom: "10px" }}>
           <div className="card-body">
             <h6 class="card-title">{key + " >"} </h6>
             {stores2[key].map((store, index) => {
+              totalCost+=store["counting"]*store["price"]
               return (
                 <div className="card" style={{ marginBottom: "10px" }}>
                   <div class="card-body">
@@ -113,8 +116,7 @@ class Cart extends Component {
             <div>{ProductComponents}</div>
           </div>
           <div class="col-lg-4">
-            {" "}
-            <CartInfo />
+            <CartInfo totalCost={totalCost}/>
           </div>
         </div>
       </div>
