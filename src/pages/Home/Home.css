@@ -1,33 +1,205 @@
-.category {
+.cha{
+  position: relative;
+}
+.danhmuc li a {
+  color: #666;
+  font-size: 14px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #f0f0f0;
+  line-height: 40px;
   display: block;
-  width: 80%;
-  margin-top: 3vh;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: white;
-}
-
-.hotdeal {
-  display: block;
-  width: 80%;
-  margin-top: 3vh;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: khaki;
-}
-/* .category-item {
-  width: 10%;
-  background-color: khaki;
-  float: left;
-  border: 1px solid green;
-  text-align: center;
-  font-size: 100%;
-}
-
-.link {
   text-decoration: none;
 }
+.danhmuc li a:hover {
+  color: #ff173c;
+}
+.danhmuc li a:hover .icondanhmuc{
+  transform: scale(1.5) rotate(90deg) ;
+  transition: 0.1s;
+}
 
-.category-item img {
+
+.icondanhmuc{
+  transition: 0.1s;
+}
+
+.con{
+  position: absolute;
+  top: 0%;
+  right: 0;
+  transform: translateX(100%);
+  height: 100%;
   width: 100%;
-} */
+  visibility: hidden;
+  z-index: 2;
+  transition: 0.3s;
+  opacity: 0;
+}
+.bentraidanhmuc li {
+  display: inline-block;
+}
+.bentraidanhmuc li a{
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
+.bentraidanhmuc li a:hover{
+  color: orangered;
+}
+
+.motsanpham{
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 400px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.motsanpham .banner{
+  position: absolute;
+  width: 15%;
+  height: 10%;
+  right: 1%;
+  top: 1%;
+  z-index: 2;
+}
+
+.motsanpham .anhsp{
+  position: absolute;
+  top:0%;
+  left:0%;
+  width: 100%;
+  height: 70%;
+  border-radius: 5px;
+}
+
+.motsanpham .tieude, .motsanpham .thanhbar, .motsanpham .gia{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.motsanpham .tieude{
+  bottom: 20%;
+  font-weight: bold;
+}
+.motsanpham .gia{
+  bottom: 12%;
+  font-size: large;
+  color: orangered;  
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.motsanpham .thanhbar{
+  bottom: 5%;
+  width:80% ;
+}
+
+.motsanpham .progress{
+  border-radius: 10px;
+  position: relative;
+}
+.motsanpham .progress-bar{
+  background-color: orangered;
+  text-align: center;
+}
+
+/* Tuy chinh phan layer control*/
+.motsanpham .layer{
+  position: absolute;
+  width: 100%;
+  height: 70%;
+  z-index: 1;
+  background-image: linear-gradient(to right, red , yellow);
+  opacity: 0;
+  transition: 0.3s;
+
+}
+
+.motsanpham .layerbox{
+  position: absolute;
+  width: 96%;
+  height: 40%;
+  z-index: 2;
+  border:solid 2px rgb(255, 255, 255);
+  top: 35%;
+  left: 2%;
+  transform: translateY(-55%); 
+  /* ba dau cho nao ko quan trong */
+  opacity: 0;
+  transition: 0.3s;
+
+}
+
+.motsanpham .controls{
+  position: absolute;
+  width: 100%;
+  height: 70%;
+  z-index: 3;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(23px);
+  transition: 0.3s;
+
+}
+
+.motsanpham .controls .iconcontrol{
+  cursor: pointer;
+  z-index: 3;
+  font-size: x-large;
+  color: orangered;
+}
+.motsanpham .controls button:hover{
+  transform: scale(1.25);
+  transition: 0.3s;
+} 
+
+.motsanpham .controls button{
+  padding: 5px;
+  background-color: white;
+  display: inline-block;
+  border-radius: 3px;
+  width: 20%;
+  z-index: 4;
+  transition: 0.3s;
+}
+
+/* tuy chinh hover */
+.motsanpham:hover .layer{
+  opacity: 0.3;
+  transition: 0.3s;
+}
+
+.motsanpham:hover .layerbox{
+  opacity: 1;
+  transform:  translateY(-50%);
+  transition: 0.3s;
+}
+.motsanpham:hover .controls{
+  opacity: 1;
+  transform: translateY(0);
+  transition: 0.3s;
+}
+
+
+/* danh muc phan khac*/
+.motsanpham .danhmucphanduoi{
+  position: absolute;
+  left: 3%;
+  bottom: 0%;
+}
+.motsanpham .gia2{
+  font-size: large;
+  color: orangered;  
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.motsanpham .diadiem{
+  position: absolute;
+  bottom: 0%;
+  right: 2%;
+}
