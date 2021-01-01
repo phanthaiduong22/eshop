@@ -7,6 +7,14 @@
   background-color: white;
 }
 
+.hotdeal {
+  display: block;
+  width: 80%;
+  margin-top: 3vh;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: khaki;
+}
 /* .category-item {
   width: 10%;
   background-color: khaki;
