@@ -23,7 +23,7 @@ const routes = [
     main: () => <Search />,
   },
   {
-    path: "/product/:id",
+    path: "/product",
     exact: true,
     main: ({ match }) => <Product match={match} />,
   },

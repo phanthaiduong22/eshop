@@ -14,13 +14,14 @@
   color: #ff173c;
 }
 .danhmuc li a:hover .icondanhmuc{
-  transform: scale(1.5) rotate(90deg) ;
+  transform: scale(1.5) ;
   transition: 0.1s;
 }
 
 
 .icondanhmuc{
   transition: 0.1s;
+  height: 20px;
 }
 
 .con{
@@ -120,13 +121,13 @@
 
 .motsanpham .layerbox{
   position: absolute;
-  width: 96%;
+  width: 120%;
   height: 40%;
   z-index: 2;
   border:solid 2px rgb(255, 255, 255);
   top: 35%;
-  left: 2%;
-  transform: translateY(-55%); 
+  left: 50%;
+  transform: translateY(-55%) translateX(-50%); 
   /* ba dau cho nao ko quan trong */
   opacity: 0;
   transition: 0.3s;
@@ -142,7 +143,7 @@
   justify-content: space-around;
   align-items: center;
   opacity: 0;
-  transform: translateY(23px);
+  transform: translateY(23px) ;
   transition: 0.3s;
 
 }
@@ -176,7 +177,7 @@
 
 .motsanpham:hover .layerbox{
   opacity: 1;
-  transform:  translateY(-50%);
+  transform:  translateY(-50%) translateX(-50%);
   transition: 0.3s;
 }
 .motsanpham:hover .controls{
