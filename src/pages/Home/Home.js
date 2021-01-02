@@ -22,6 +22,15 @@ class Home extends Component {
       flashdeals: [],
       categories: [],
       common: [],
+      hienthimodelBox:false,
+
+      // for add cart
+      username: "",
+      password: "",
+      currentPRprice: 0,
+      currentPRID : 0,
+
+
     };
   }
 
@@ -83,7 +92,7 @@ class Home extends Component {
               
                 <button onClick={() => {this.onClickLove(this.state.flashdeals[i].id)}}><FontAwesomeIcon icon={faHeart} className="iconcontrol"/></button>
                 <button onClick={() => {this.onClickInfo(this.state.flashdeals[i].id)}}><FontAwesomeIcon icon={faInfo} className="iconcontrol"/></button>
-                <button onClick={() => {this.onClickaddCart(this.state.flashdeals[i].id)}}><FontAwesomeIcon icon={faCartPlus} className="iconcontrol"/></button>
+                <button onClick={() => {this.onClickaddCart(this.state.flashdeals[i].id,this.state.flashdeals[i].price)}}><FontAwesomeIcon icon={faCartPlus} className="iconcontrol"/></button>
               </div>
                 : <div className="controls">
               
@@ -179,7 +188,7 @@ class Home extends Component {
               
                 <button onClick={() => {this.onClickLove(this.state.common[i].id)}}><FontAwesomeIcon icon={faHeart} className="iconcontrol"/></button>
                 <button onClick={() => {this.onClickInfo(this.state.common[i].id)}}><FontAwesomeIcon icon={faInfo} className="iconcontrol"/></button>
-                <button onClick={() => {this.onClickaddCart(this.state.common[i].id)}}><FontAwesomeIcon icon={faCartPlus} className="iconcontrol"/></button>
+                <button onClick={() => {this.onClickaddCart(this.state.common[i].id, this.state.common[i].price)}}><FontAwesomeIcon icon={faCartPlus} className="iconcontrol"/></button>
               </div>
                 : <div className="controls">
               
@@ -260,7 +269,7 @@ class Home extends Component {
   </div>
   }
 
-
+ 
   
   render() {
 
@@ -337,11 +346,31 @@ class Home extends Component {
     ;
 
     return <div class="container">
-      <div class = "row">
-      <div class = "col-md-4" >
+      
+      <div className={`${this.state.hienthimodelBox ? "momoaoao hienra" : "momoaoao"}`} onClick={() => {this.toggleModalBox()}}></div>
+      <div className={`${this.state.hienthimodelBox ? "modal_box modal_ef modal_show" : "modal_box modal_ef"}`}>
+        <div className="modal_content card">
+        <form className="card-body" onSubmit={this.onSubmitSignIn}>
+          <div>Xin loi, ban phai dang nhap de thuc hien thao tac nay</div>
+        <div className="form-group" >
+          <label for="exampleInputEmail1">Username</label>
+          <input onChange={this.onUsernameChange} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username"></input>
+        </div>
+        <div className="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input onChange={this.onPasswordChange} type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"></input>
+        </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </form>
+        </div>
+    </div>
+
+
+      <div className = "row">
+      <div className = "col-md-4" >
         {danhmucReactDom}
       </div>
-      <div class = "col-md-8" >
+      <div className = "col-md-8" >
         {bentraidanhmuc}
       </div>
       </div>
@@ -352,27 +381,88 @@ class Home extends Component {
     </div>
   }
 
+  onUsernameChange = (event) => {
+    this.setState({ username: event.target.value });
+  };
+
+  onPasswordChange = (event) => {
+    this.setState({ password: event.target.value });
+
+  };
+
+  onSubmitSignIn = (event) => {
+    event.preventDefault();
+    //todo: hien thivong xoay o day
+    let { username, password } = this.state;
+    console.log(username, password)
+    callAPI("/login", "POST", {
+      username,
+      password,
+    })
+      .then((response) => {
+        // this.setState({ redirect: true });
+        let token = response.data;
+        localStorage.setItem("token", token);
+        console.log("login thanh cong")
+        // neu thanh cong thi tat nut xoay , tat model box
+        this.toggleModalBox();
+        this.addCartItem();
+          // hien thi thong bao add don hang thanh cong
+        
+      })
+      .catch((e) => {
+        this.setState({ error: e.response.data });
+      console.log(e.response);
+      });
+  };
+
+  addCartItem(){
+    let idProduct = this.state.currentPRID;
+    let price = this.state.currentPRprice;
+    //todo: gia su  acesss vo han :v , cai nay su lys sau
+    console.log(idProduct, price)
+    let token = localStorage.getItem("token");
+     callAPI("/cart?action=add", "POST", {
+        idProduct, price
+    },token )
+      .then((response) => {
+        console.log(response);
+        alert("Them gio hang thanh cong, gio hang cua ban dang chua " + 
+        response.data[0].tongsohang + "san pham\r\n Tong gia tri" + response.data[0].tonggiatri
+        );
+      })
+      .catch((e) => {
+        console.log(e.response);
+      });
+  }
+
   // su kien
   onClickInfo(idProduct){
     console.log(idProduct);
     window.open("product?id=" + idProduct,"_self");
   }
 
-  onClickaddCart(idProduct){
-    callAPI("", "POST", {
-      
-    })
-      .then((response) => {
-        console.log(response);
-        this.setState({ 
-          flashdeals: response.data,
-          common: response.data,  });
+  // hien thi modelBox
+  toggleModalBox(){
+    this.setState(prevState => ({ hienthimodelBox: !prevState.hienthimodelBox }));
+  }
 
-        return response.data;
-      })
-      .catch((e) => {
-        console.log(e.response);
-      });
+  async onClickaddCart(idProduct, price){
+   // them price vao state
+   await this.setState({
+    currentPRprice: price ,
+    currentPRID: idProduct,
+  })
+    // check xem co toekn khong
+    let token = localStorage.getItem("token");
+    if(token==null){
+      // show model box va bat dang nhap 
+      this.toggleModalBox();
+            
+    } else{
+      // show cai model box them vao gio hang thanh cong
+      this.addCartItem()
+    }     
   }
 
   onClickLove(){
