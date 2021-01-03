@@ -29,7 +29,7 @@ class Home extends Component {
       password: "",
       currentPRprice: 0,
       currentPRID : 0,
-
+      soluong:1
 
     };
   }
@@ -419,11 +419,12 @@ class Home extends Component {
   addCartItem(){
     let idProduct = this.state.currentPRID;
     let price = this.state.currentPRprice;
+    let numPr = this.state.soluong;
     //todo: gia su  acesss vo han :v , cai nay su lys sau
     console.log(idProduct, price)
     let token = localStorage.getItem("token");
      callAPI("/cart?action=add", "POST", {
-        idProduct, price
+        idProduct, price, numPr
     },token )
       .then((response) => {
         console.log(response);

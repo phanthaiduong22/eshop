@@ -77,3 +77,65 @@ table td{
 .hieu .nhanxetphai{
     margin-left: 40px;
 }
+
+
+/* hieu ung cho model box */
+.momoaoao {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+    background: #2c05058a;
+    transition: 0.3s;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    top: 0;
+    left: 0;
+  }
+  .momoaoao.hienra {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .modal_box {
+    width: 50%;
+    max-width: 630px;
+    min-width: 320px;
+    height: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 10;
+    font-size: 20px;
+    visibility: hidden;
+    transition: 0.3s;
+  
+  }
+  
+  .modal_content {
+    display: inline-block;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px 5px;
+    width: 100%;
+    transition: 0.3s;
+  }
+  
+  .modal_ef {
+    perspective: 1300px;
+  }
+  .modal_ef .modal_content {
+    opacity: 0;
+    transform: rotateY(-70deg);
+    transform-origin: 50% 0%;
+    visibility: hidden;
+  }
+  
+  
+  .modal_show.modal_ef .modal_content {
+    opacity: 1;
+    transform: rotateY(0deg);
+    visibility: visible;
+    
+  }

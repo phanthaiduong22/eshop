@@ -35,7 +35,16 @@ class Product extends Component {
             totalComment: 0,
             totalOrder : 0,
             comments : [{product_id:0,no:0,user_id:0,comment:"hieu map beo nhu heo",timestamp:"2014-01-14T10:33:34.000Z"}],
+            
+            // controll submit box
+            context: "null",
+
+            // for add cart
+            username: "",
+            password: "",
             soluong :1,
+
+            // for following Shop
 
                 
         
@@ -44,7 +53,6 @@ class Product extends Component {
      async componentDidMount(){
         const parsed = queryString.parse(window.location.search);
         
-
         await callAPI("/product?action=getGeneralInfoProduct&id=" + parsed.id ,"GET", {
         })
           .then((response) => {
@@ -96,6 +104,8 @@ class Product extends Component {
           .catch((e) => {
             console.log(e.response);
           });
+
+       
     }
 
     handleSelect = (selectedIndex, e) => {
@@ -123,13 +133,13 @@ class Product extends Component {
         return result;
     }
 
-    upsoluong(){
-        this.setState(prevState => {
+    async upsoluong(){
+        await this.setState(prevState => {
             return {soluong: prevState.soluong + 1}
          })
     }
-    downsoluong(){
-        this.setState(prevState => {
+    async downsoluong(){
+        await this.setState(prevState => {
             return {soluong: prevState.soluong - 1}
          })
     }
@@ -197,8 +207,8 @@ class Product extends Component {
                             </div>
                         
                             <div className="mt-2">
-                                <div className="btn btn-outline-warning mr-2" type = "button"> Mua ngay</div>
-                                <div className="btn btn-outline-warning mr-2" type = "button">Thêm vào giỏ hàng<FontAwesomeIcon icon={faCartPlus}/></div>
+                                <div onClick={() => { this.onMuaNgay()} } className="btn btn-outline-warning mr-2" type = "button"> Mua ngay</div>
+                                <div onClick={() => {this.onClickaddCart(this.state.product[0].id, this.state.product[0].price,this.state.soluong )}} className="btn btn-outline-warning mr-2" type = "button">Thêm vào giỏ hàng<FontAwesomeIcon icon={faCartPlus}/></div>
                                 <div className="btn btn-outline-danger" type = "button">{this.state.totalOrder}<FontAwesomeIcon icon={faHeart}/></div>
                             </div>
                         </div>
@@ -219,23 +229,23 @@ class Product extends Component {
                         <div className="d-inline-block ml-2">
                             <h5>Hazala Store</h5>
                             <div className="shopaction">
-                                <div className="btn btn-warning mr-2" type = "button">Thăm shop</div>
-                                <div className="btn btn-danger mr-2" type = "button">Chat <FontAwesomeIcon icon={faFacebookMessenger}/></div>
-                                <div className="btn btn-info" type = "button">Theo dõi<FontAwesomeIcon icon={faCloudversify}/></div>
+                                <div className="btn btn-warning mr-2" type = "button">Xem shop</div>
+                                <div className="btn btn-primary mr-2" type = "button">Chat <FontAwesomeIcon icon={faFacebookMessenger}/></div>
+                                <div onClick={() => {this.onClickfollowShop()}} className="btn btn-danger" type = "button" style={{backgroundColor:'orangered'}}>Theo dõi<FontAwesomeIcon icon={faCloudversify}/></div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="card-deck col-md-6">
-                        <div className="col-md-6 card text-white bg-danger">
-                            <div className="card-body">
-                                <div>Tỷ lệ : <span className="badge badge-success">95%</span></div>
+                    <div className="card-deck col-md-6" >
+                        <div className="col-md-6 card text-white bg-warning" >
+                            <div className="card-body" style={{color: 'black'}}>
+                                <div >Tỷ lệ : <span className="badge badge-success">95%</span></div>
                                 <div>Đánh giá : <span className="badge badge-success">93%</span></div>
                             </div>
                         </div>
         
-                        <div className="col-md-6 card text-white bg-danger">
-                            <div className="card-body">
+                        <div className="col-md-6 card text-white bg-warning">
+                            <div className="card-body" style={{color: 'black'}}>
                                 <div>Thời gian : <span className="badge badge-success">2h</span></div>
                                 <div>Lượt theo dõi: <span className="badge badge-success">146</span></div>
                             </div>
@@ -385,6 +395,24 @@ class Product extends Component {
     </div>
 
         return <div class = "container">
+        <div className={`${this.state.hienthimodelBox ? "momoaoao hienra" : "momoaoao"}`} onClick={() => {this.toggleModalBox()}}></div>
+        <div className={`${this.state.hienthimodelBox ? "modal_box modal_ef modal_show" : "modal_box modal_ef"}`}>
+            <div className="modal_content card">
+            <form className="card-body" onSubmit={this.onSubmitSignIn}>
+            <div>Xin loi, ban phai dang nhap de thuc hien thao tac nay</div>
+            <div className="form-group" >
+            <label for="exampleInputEmail1">Username</label>
+            <input onChange={this.onUsernameChange} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username"></input>
+            </div>
+            <div className="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input onChange={this.onPasswordChange} type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"></input>
+            </div>
+            <button type="submit" className="btn btn-primary">Submit</button>
+        </form>
+            </div>
+        </div>
+
         {thongtinchung}
         <br/>
         {cuahang}
@@ -397,6 +425,137 @@ class Product extends Component {
         </div>
         
     }
+
+    doFollowShop(){
+        let token = localStorage.getItem("token");
+        // gui request 
+        let idStore = this.state.product[0].store_id;
+        let action = "follow"
+        callAPI("/shop", "POST", {
+            action, idStore
+       },token )
+         .then((response) => {
+           console.log(response);
+           alert("Theo doi shop thanh cong" + 
+           response
+           );
+         })
+         .catch((e) => {
+           console.log(e.response);
+           this.toggleModalBox();
+         });
+    }
+
+    // theo doi shop 
+    onClickfollowShop(){
+
+        this.setState({
+            context: "followshop"
+        })
+        // check xem co toekn khong
+        let token = localStorage.getItem("token");
+        if(token==null){
+            // show model box va bat dang nhap 
+            this.toggleModalBox();
+        }else{
+            this.doFollowShop();
+        }
+    }
+
+    // Mua Ngay 
+    async onMuaNgay(){
+    await this.setState({
+        context: "muangay"
+    })
+     await this.onClickaddCart(this.state.product[0].id, this.state.product[0].price,this.state.soluong);
+     await window.open("checkout" ,"_self");
+    }
+
+    // xu li cho cac su kien 
+    addCartItem(){
+        let idProduct = this.state.product[0].id;
+        let price = this.state.product[0].price;
+        let numPr = this.state.soluong;
+        //todo: gia su  acesss vo han :v , cai nay su lys sau
+        console.log(idProduct, price)
+        let token = localStorage.getItem("token");
+         callAPI("/cart?action=add", "POST", {
+            idProduct, price, numPr
+        },token )
+          .then((response) => {
+            console.log(response);
+            alert("Them gio hang thanh cong, gio hang cua ban dang chua " + 
+            response.data[0].tongsohang + "san pham\r\n Tong gia tri" + response.data[0].tonggiatri
+            );
+          })
+          .catch((e) => {
+            console.log(e.response);
+            this.toggleModalBox();
+          });
+    }
+
+    // hien thi modelBox
+  toggleModalBox(){
+    this.setState(prevState => ({ hienthimodelBox: !prevState.hienthimodelBox }));
+  }
+
+  async onClickaddCart(idProduct, price, numProduct){
+    this.setState({
+        context: "addCart"
+    })
+     // check xem co toekn khong
+     let token = localStorage.getItem("token");
+     if(token==null){
+         
+       // show model box va bat dang nhap 
+       this.toggleModalBox();
+             
+     } else{
+       // show cai model box them vao gio hang thanh cong
+       this.addCartItem()
+     }     
+   }
+
+   onSubmitSignIn = (event) => {
+    event.preventDefault();
+    //todo: hien thivong xoay o day
+    let { username, password } = this.state;
+    console.log(username, password)
+    callAPI("/login", "POST", {
+      username,
+      password,
+    })
+      .then((response) => {
+        // this.setState({ redirect: true });
+        let token = response.data;
+        localStorage.setItem("token", token);
+        console.log("login thanh cong")
+        // neu thanh cong thi tat nut xoay , tat model box
+        this.toggleModalBox();
+
+        if(this.state.context == "followshop"){
+            this.doFollowShop();
+        }else if(this.state.context == "addCart"){
+            this.addCartItem();
+        }
+        
+      })
+      .catch((e) => {
+        this.setState({ error: e.response.data });
+      console.log(e.response);
+      });
+  };
+
+  onUsernameChange = (event) => {
+    this.setState({ username: event.target.value });
+  };
+
+  onPasswordChange = (event) => {
+    this.setState({ password: event.target.value });
+
+  };
+
+
 }
 
 export default Product;
