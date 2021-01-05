@@ -1,0 +1,10 @@
+input[type='radio'] { transform: scale(1.5);
+    margin-top: 0.4em;
+    padding-top: 2em;
+    vertical-align:bottom;
+    padding-right: 2;
+}
+
+.input-group .form-control {
+    margin: 0px !important;
+}
