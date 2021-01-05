@@ -9,7 +9,6 @@ import dateFnsFormat from 'date-fns/format';
 import dateFnsParse from 'date-fns/parse';
 
 import { FormGroup, Button, FormControl, Form, ControlLabel } from "react-bootstrap";
-import './Info.css'
 
 function parseDate(str, format, locale) {
   const parsed = dateFnsParse(str, format, new Date(), { locale });
