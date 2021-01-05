@@ -15,6 +15,11 @@ class SellerSideBar extends Component {
   addNewProduct = () => {
     this.setState({ redirect: "/sell/addnewproduct" });
   };
+
+  listOrders = () => {
+    this.setState({ redirect: "/sell/orders" });
+  };
+
   render() {
     let { redirect } = this.state;
     if (redirect) {
@@ -22,11 +27,11 @@ class SellerSideBar extends Component {
       return <Redirect to={redirect} />;
     }
     return (
-      <div className="col-md-3 shadow p-3 mb-5 bg-secondary rounded">
-        <div className="card">
-          <div className="card text-blac bg-white">
-            <div className="card-body border">
-              <h4 className="card-title">Quản lý sản phẩm</h4>
+      <div className="col-md-3 shadow p-3 mb-5 bg-secondary rounded d-flex justify-content-center">
+        <div className="card ">
+          <div className="card text-black bg-white ">
+            <div className="card-body border ">
+              <h4 className="card-title ">Quản lý sản phẩm</h4>
               <button
                 type="button"
                 className="btn btn-secondary"
@@ -34,7 +39,6 @@ class SellerSideBar extends Component {
               >
                 Danh sách sản phẩm
               </button>
-
               <button
                 type="button"
                 className="btn btn-secondary"
@@ -45,7 +49,11 @@ class SellerSideBar extends Component {
             </div>
             <div className="card-body border">
               <h4 className="card-title">Quản lý đơn hàng</h4>
-              <button type="button" className="btn btn-secondary">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={this.listOrders}
+              >
                 Danh sách đơn hàng
               </button>
             </div>
