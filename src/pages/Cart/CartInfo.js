@@ -6,7 +6,6 @@ class CartInfo extends Component {
     super();
     this.state = {
       address: "35 Nam Kỳ Khởi Nghĩa quận 3 TP.HCM",
-      productsCost: 10000000,
       transportCost: 20000,
     };
   }
@@ -21,7 +20,7 @@ class CartInfo extends Component {
           <h6>Thông tin đơn hàng</h6>
           <div class="bg-light d-flex justify-content-between">
             <div>Total Cost</div>
-            <div>{this.state.productsCost}</div>
+            <div>{this.props.totalCost}</div>
           </div>
           <div class="bg-light d-flex justify-content-between">
             <div>Transport Cost</div>
@@ -39,7 +38,7 @@ class CartInfo extends Component {
           </div>
           <h6>Tổng cộng</h6>
           <hr></hr>
-          <div class="d-flex justify-content-center"><h4 style={{color:"red",margin:"auto"}}>{this.state.productsCost+this.state.transportCost+"đ"}</h4></div>
+          <div class="d-flex justify-content-center"><h4 style={{color:"red",margin:"auto"}}>{this.props.totalCost+this.state.transportCost+"đ"}</h4></div>
 
 <button type="button" name="" id="" class="btn btn-danger btn-lg btn-block">Check out</button>
           

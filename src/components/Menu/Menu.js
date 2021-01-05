@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPersonBooth,
   faSearch,
   faShoppingBag,
   faShoppingCart,
@@ -100,17 +99,33 @@ class Menu extends Component {
                     </Link>
                   </li>
                   <li class="nav-item">
-                    <Link to="/info" className="navlink">
+                    {
+                      this.props.status.loggedIn?
+                      <Link to="/info" className="navlink">
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <FontAwesomeIcon icon={faUser} className="fa-2x" />
                         <span
                           style={{ fontSize: "small", paddingLeft: "0.5em" }}
                         >
-                          Bạn chưa<br></br>
-                          đăng nhập
+                          Xin chào<br></br>
+                          {this.props.status.userInfo.name}
                         </span>
                       </div>
-                    </Link>
+                    </Link>:
+                    <Link to="/login" className="navlink">
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <FontAwesomeIcon icon={faUser} className="fa-2x" />
+                      <span
+                        style={{ fontSize: "small", paddingLeft: "0.5em" }}
+                      >
+                        Bạn chưa<br></br>
+                        đăng nhập
+                      </span>
+                    </div>
+                  </Link>
+
+                    }
+                   
                   </li>
                 </ul>
               </div>

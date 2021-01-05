@@ -63,6 +63,7 @@ class Login extends Component {
             type="text"
             onChange={this.onUsernameChange}
             placeholder="Enter Username"
+            className="logininput"
             required
           />
 
@@ -73,15 +74,16 @@ class Login extends Component {
             onChange={this.onPasswordChange}
             type="password"
             placeholder="Enter Password"
+            className="logininput"
             required
           />
 
-          <button type="submit">Login</button>
+          <button type="submit" className="login-btn">Login</button>
         </div>
 
         <div className="container" style={{ backgroundColor: "#f1f1f1" }}>
           <Link to={"/"}>
-            <button type="button" className="cancelbtn">
+            <button type="button" className="cancelbtn login-btn">
               Cancel
             </button>
           </Link>
