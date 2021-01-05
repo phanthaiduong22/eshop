@@ -10,6 +10,7 @@ import Register from "./pages/Register/Register";
 import Info from "./pages/Info/Info";
 import Sell from "./pages/Sell/Sell";
 import AddNewProduct from "./pages/AddNewProduct/AddNewProduct";
+import SellerListProduct from "./pages/SellerListProduct/SellerListProduct";
 
 const routes = [
   {
@@ -61,6 +62,11 @@ const routes = [
     path: "/sell/addnewproduct",
     exact: true,
     main: () => <AddNewProduct />,
+  },
+  {
+    path: "/sell/listproduct",
+    exact: true,
+    main: () => <SellerListProduct />,
   },
   {
     path: "",

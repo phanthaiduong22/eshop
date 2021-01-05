@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./AddNewProduct.css";
 import Alert from "../../components/Alert/Alert";
 import callAPI from "../../utils/apiCaller";
+import SellerSideBar from "../../components/SellerSideBar/SellerSideBar";
 
 class AddNewProduct extends Component {
   constructor(props) {
@@ -27,7 +28,6 @@ class AddNewProduct extends Component {
       .catch((err) => console.log(err));
 
     let token = localStorage.getItem("token");
-    console.log(token);
     this.setState({ token });
   };
 
@@ -114,97 +114,102 @@ class AddNewProduct extends Component {
       });
 
     return (
-      <div className="container">
-        <div className="card bg-white p-5 ">
-          <h1>Điền thông tin sản phẩm</h1>
-          <div className="form-group border p-3">
-            <label>Tên sản phẩm</label>
-            <input
-              type="text"
-              className="form-control bg-white border"
-              value={this.state.product_name}
-              onChange={this.handleProductNameChange}
-            />
-          </div>
-          <div className="form-group border p-3">
-            <label>Chọn ngành hàng</label>
-            <select
-              className="custom-select"
-              value={this.state.cat}
-              onChange={this.handleCatChange}
-            >
-              <option defaultValue>Chọn ngành hàng</option>
-              {listCategoryOption}
-            </select>
-          </div>
-          <form className="form-group border p-3">
-            <label>Mô tả sản phẩm</label>
-            <div className="input-group ">
-              <textarea
-                className="form-control description"
-                aria-label="With textarea"
-                value={this.state.description}
-                onChange={this.handleDescriptionChange}
-              ></textarea>
-            </div>
-          </form>
-          <div className="form-group border p-3">
-            <label>Link hình ảnh</label>
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text">https</span>
+      <div className="container-fluid">
+        <div className="row m-5 ">
+          <SellerSideBar />
+          <div className="col-md">
+            <div className="card bg-white p-5 ">
+              <h1>Điền thông tin sản phẩm</h1>
+              <div className="form-group border p-3">
+                <label>Tên sản phẩm</label>
+                <input
+                  type="text"
+                  className="form-control bg-white border"
+                  value={this.state.product_name}
+                  onChange={this.handleProductNameChange}
+                />
               </div>
-              <input
-                type="text"
-                className="form-control bg-white border"
-                aria-label="Amount (to the nearest dong)"
-                value={this.state.product_image}
-                onChange={this.handleProductImageChange}
-              />
-            </div>
-          </div>
-          <div className="form-group border p-3">
-            <label>Nguồn gốc</label>
-            <input
-              type="text"
-              className="form-control bg-white border"
-              value={this.state.origin}
-              onChange={this.handleOriginChange}
-            />
-          </div>
+              <div className="form-group border p-3">
+                <label>Chọn ngành hàng</label>
+                <select
+                  className="custom-select"
+                  value={this.state.cat}
+                  onChange={this.handleCatChange}
+                >
+                  <option defaultValue>Chọn ngành hàng</option>
+                  {listCategoryOption}
+                </select>
+              </div>
+              <form className="form-group border p-3">
+                <label>Mô tả sản phẩm</label>
+                <div className="input-group ">
+                  <textarea
+                    className="form-control description"
+                    aria-label="With textarea"
+                    value={this.state.description}
+                    onChange={this.handleDescriptionChange}
+                  ></textarea>
+                </div>
+              </form>
+              <div className="form-group border p-3">
+                <label>Link hình ảnh</label>
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">https</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control bg-white border"
+                    aria-label="Amount (to the nearest dong)"
+                    value={this.state.product_image}
+                    onChange={this.handleProductImageChange}
+                  />
+                </div>
+              </div>
+              <div className="form-group border p-3">
+                <label>Nguồn gốc</label>
+                <input
+                  type="text"
+                  className="form-control bg-white border"
+                  value={this.state.origin}
+                  onChange={this.handleOriginChange}
+                />
+              </div>
 
-          <div className="form-group border p-3">
-            <label>Số lượng</label>
-            <input
-              type="number"
-              className="form-control"
-              value={this.state.stock}
-              onChange={this.handleStockChange}
-            />
-          </div>
-          <div className="form-group border p-3">
-            <label>Giá tiền</label>
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text">đồng</span>
+              <div className="form-group border p-3">
+                <label>Số lượng</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={this.state.stock}
+                  onChange={this.handleStockChange}
+                />
               </div>
-              <input
-                type="number"
-                className="form-control bg-white border"
-                aria-label="Amount (to the nearest dong)"
-                value={this.state.price}
-                onChange={this.handlePriceChange}
-              />
+              <div className="form-group border p-3">
+                <label>Giá tiền</label>
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">đồng</span>
+                  </div>
+                  <input
+                    type="number"
+                    className="form-control bg-white border"
+                    aria-label="Amount (to the nearest dong)"
+                    value={this.state.price}
+                    onChange={this.handlePriceChange}
+                  />
+                </div>
+              </div>
+              {showerror}
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={this.onSubmit}
+              >
+                Đăng sản phẩm
+              </button>
             </div>
           </div>
-          {showerror}
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={this.onSubmit}
-          >
-            Đăng sản phẩm
-          </button>
         </div>
       </div>
     );

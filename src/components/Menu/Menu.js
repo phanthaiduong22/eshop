@@ -46,14 +46,26 @@ class Menu extends Component {
           <div className="container topbar">
             <ul>
               <li>
-                <Link to="/" className="topbaritem">
+                <Link to="/sell" className="topbaritem">
                   Kênh người bán
                 </Link>
               </li>
               <li className="topbaritem"> | </li>
               <li>
-                <Link to="/" className="topbaritem">
-                  Trợ giúp
+                <Link to="/search" className="topbaritem">
+                  Search
+                </Link>
+              </li>
+              <li className="topbaritem"> | </li>
+              <li>
+                <Link to="/login" className="topbaritem">
+                  Đăng nhập
+                </Link>
+              </li>
+              <li className="topbaritem"> | </li>
+              <li>
+                <Link to="/register" className="topbaritem">
+                  Đăng ký
                 </Link>
               </li>
             </ul>
@@ -89,7 +101,10 @@ class Menu extends Component {
                     </span>
                   </div>
                 </div>
-                <ul class="navbar-nav" style={{ display: "flex", alignItems: "center" }}>
+                <ul
+                  class="navbar-nav"
+                  style={{ display: "flex", alignItems: "center" }}
+                >
                   <li class="nav-item">
                     <Link to="/cart" className="navlink">
                       <FontAwesomeIcon
