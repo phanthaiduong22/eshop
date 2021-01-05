@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import SellerSideBar from "../../components/SellerSideBar/SellerSideBar";
 
 class Sell extends Component {
 
 
   render() {
-
     return (
       <div className="container-fluid ">
         <div className="row m-5 ">

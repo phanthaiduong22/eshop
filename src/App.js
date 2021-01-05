@@ -6,39 +6,39 @@ import Menu from "./components/Menu/Menu";
 import routes from "./routes";
 
 class App extends Component {
-  constructor(props){
-    super(props)
-    this.state={
-      loggedIn:false,
-      userInfo:{}
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: false,
+      userInfo: {},
+    };
   }
-  componentDidMount=()=>{
+  componentDidMount = () => {
     let token = localStorage.getItem("token");
     this.setState({ token });
     if (token) {
       callAPI("/getuser", "GET", null, token)
         .then((res) => {
-         console.log(res);
-         this.setState({'userInfo':res.data,'loggedIn':true});
+          console.log("hi", res);
+          this.setState({ userInfo: res.data, loggedIn: true });
         })
         .catch((err) => {
-          if(err.response.data="Invalid Token"){
-            this.setState({'userInfo':{},'loggedIn':false});
+          if ((err.response.data = "Invalid Token")) {
+            this.setState({ userInfo: {}, loggedIn: false });
           }
         });
     }
-  }
+  };
 
-  updateStatus=(status)=>{
-    console.log("you called me!")
-  }
+  updateStatus = (status) => {
+    console.log("you called me!");
+  };
 
   render() {
     return (
       <Router>
         <div>
-          <Menu status={this.state}/>
+          <Menu status={this.state} />
           <div className="container-fluid">
             <div className="row">{this.showContentMenus(routes)}</div>
           </div>

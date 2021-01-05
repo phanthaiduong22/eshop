@@ -38,6 +38,7 @@ class Login extends Component {
         // this.setState({ redirect: true });
         let token = response.data;
         localStorage.setItem("token", token);
+        localStorage.setItem("reloadInfo", 1);
         this.setState({ redirect: "/info" });
       })
       .catch((e) => {
@@ -45,7 +46,7 @@ class Login extends Component {
         console.log(e.response);
       });
   };
-
+  k;
   render() {
     let { error, redirect } = this.state;
     let showerror = null;
@@ -78,7 +79,9 @@ class Login extends Component {
             required
           />
 
-          <button type="submit" className="login-btn">Login</button>
+          <button type="submit" className="login-btn">
+            Login
+          </button>
         </div>
 
         <div className="container" style={{ backgroundColor: "#f1f1f1" }}>
