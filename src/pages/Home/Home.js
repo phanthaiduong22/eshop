@@ -160,11 +160,8 @@ class Home extends Component {
       <strong>Flash Deal</strong>
       <span className="ml-2 badge badge-danger">15:16</span>
       </div>
-
       {rows}
-
     </div>
-
   </div>
 
   };

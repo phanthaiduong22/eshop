@@ -1,49 +1,16 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import SellerSideBar from "../../components/SellerSideBar/SellerSideBar";
 
 class Sell extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      redirect: "",
-    };
-  }
-  addNewProduct = () => {
-    this.setState({ redirect: "/sell/addnewproduct" });
-  };
+
 
   render() {
-    let { redirect } = this.state;
-    if (redirect) return <Redirect to={redirect} />;
+
     return (
       <div className="container-fluid ">
         <div className="row m-5 ">
-          <div className="col-md-3 shadow p-3 mb-5 bg-secondary rounded">
-            <div className="card">
-              <div className="card text-blac bg-white">
-                <div className="card-body border">
-                  <h4 className="card-title">Quản lý sản phẩm</h4>
-                  <button type="button" className="btn btn-secondary">
-                    Danh sách sản phẩm
-                  </button>
-
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={this.addNewProduct}
-                  >
-                    Đăng sản phẩm mới
-                  </button>
-                </div>
-                <div className="card-body border">
-                  <h4 className="card-title">Quản lý đơn hàng</h4>
-                  <button type="button" className="btn btn-secondary">
-                    Danh sách đơn hàng
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <SellerSideBar />
           <div className="col-md">
             <div className="row">
               <div className="col-5 ml-5">
