@@ -22,9 +22,6 @@ const SellerProductItem = ({ product, token }) => {
       <td>{product.price}</td>
       <td>{product.origin}</td>
       <td>
-        <button type="button" className="btn btn-primary">
-          Chỉnh sửa
-        </button>
         <button
           type="button"
           className="btn btn-danger mr-3"
