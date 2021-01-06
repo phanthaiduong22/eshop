@@ -4,12 +4,7 @@ import { Component } from "react";
 import callAPI from "../../utils/apiCaller";
 import sale2 from "./sale2.png";
 
-import {
-  faCartPlus,
-  faHeart,
-  faBolt,
-  faInfo,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faHeart, faInfo } from "@fortawesome/free-solid-svg-icons";
 import { Redirect, Link } from "react-router-dom";
 import Alert from "../Alert/Alert";
 
@@ -143,16 +138,22 @@ class ProductItem extends Component {
                 </div>
               )}
 
-              <img className="banner" src={sale2}></img>
+              <img className="banner" src={sale2} alt="image"></img>
 
               {this.state.products.length > 0 ? (
                 <img
+                  alt="image"
                   className="anhsp"
                   src={this.state.products[i].image_url}
                   style={{ width: "100%" }}
                 ></img>
               ) : (
-                <img className="anhsp" src="" style={{ width: "100%" }}></img>
+                <img
+                  alt="image"
+                  className="anhsp"
+                  src=""
+                  style={{ width: "100%" }}
+                ></img>
               )}
 
               {this.state.products.length > 0 ? (
