@@ -1,0 +1,11 @@
+.fa {
+    vertical-align: middle;
+}
+
+button.btn {
+    text-align: left;
+}
+
+.input-group .form-control {
+    vertical-align: top;
+}

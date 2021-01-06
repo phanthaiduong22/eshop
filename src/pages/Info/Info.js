@@ -149,7 +149,7 @@ class Info extends Component {
                     {
                       sexs.map((sex) =>(
                         <option key={sex.id} value={sex.id} 
-                        selected={userInfo.sex == sex.id}>{sex.name}</option>
+                        selected={userInfo.sex === sex.id}>{sex.name}</option>
                       ))
                     }
                   </select>

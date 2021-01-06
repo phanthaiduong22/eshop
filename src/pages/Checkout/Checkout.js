@@ -2,13 +2,23 @@ import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.min.css'
 import "./Checkout.css"
+import callAPI from "../../utils/apiCaller";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShippingFast, faAddressCard, faMapMarkedAlt, faMobileAlt, faAt
 , faMoneyBillAlt, faCreditCard, faWallet} from '@fortawesome/free-solid-svg-icons'
+import token from "../../reducers/token";
 
 
 class Checkout extends Component {
-  state = 
+  constructor(props) {
+    super();
+    this.state = {
+      products: [],
+      userInfo: [],
+      token: "",
+    };
+  }
+  states = 
   {
     packages: 
     [
@@ -61,15 +71,89 @@ class Checkout extends Component {
     }
   }
 
+  getUserInfo = () => {
+    if (this.state.token) {
+    console.log(this.state.token);
+    callAPI("/checkout/getUserInfo", "GET", null, this.state.token)
+      .then((res) => {
+        console.log(res.data);
+        this.setState({ userInfo: res.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+
+  getProducts = () => {
+    if (this.state.token) {
+    console.log(this.state.token);
+    callAPI("/checkout/getProducts", "GET", null, this.state.token)
+      .then((res) => {
+        console.log(res.data);
+        this.setState({ products: res.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+  };
+
+  getCheckoutData = () => {
+    this.getProducts();
+    this.getUserInfo();
+  }
+
+  componentDidMount = () => {
+    let token_ = localStorage.getItem("token");
+
+    const products = this.getProducts();
+    const info = this.getUserInfo();
+
+    console.log(info);
+    this.setState({ token: token_ }, () => {this.getCheckoutData()});
+  };
+
+  // getUserInfo = () =>
+  // {
+  //   let info = this.state.userInfo[0];
+  //   console.log(this.state.userInfo)
+  //   return {
+  //     name: info.name,
+  //     email: info.email,
+  //     phone: info.phone,
+  //     address: info.street + ", " + info.ward + ", " + info.district + ", " + info.city,
+  //   }
+  // }
 
 
   render() {
-    const {packages, reciver} = this.state
+    const reciver = this.states.reciver;
     let allProduct = []
     let sumShipPrice = 0
     let sumPrice = 0
 
-    let packageComponet = packages.map((pack) => (
+    let product_groups = this.state.products.reduce( (acc, p) => {
+      acc[p.store_id] = acc[p.store_id] || [];
+      acc[p.store_id].push(p);
+      return acc;
+    }, {});
+
+    console.log(product_groups);
+
+    let packages_ = Object.values(product_groups).map((group, i) => (
+      {
+        id: i,
+        agencyName: "Giao Hang tiet kiem",
+        arriveDate: "22/5/2020",
+        price: 200000,
+        productList: group
+      }
+    ));
+
+    console.log(packages_);
+
+    let packageComponet = packages_.map((pack) => (
       sumShipPrice += pack.price,
       <div class="container ml-2 mr-1 my-2 border">
             <div class="d-flex flex-row">
