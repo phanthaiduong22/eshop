@@ -47,7 +47,6 @@ class Info extends Component {
   componentDidMount = () => {
     let token = localStorage.getItem("token");
     let reloadInfo = localStorage.getItem("reloadInfo");
-    console.log(reloadInfo);
     if (reloadInfo == 1) {
       localStorage.setItem("reloadInfo", 0);
       window.location.reload();

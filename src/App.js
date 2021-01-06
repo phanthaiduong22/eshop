@@ -19,7 +19,6 @@ class App extends Component {
     if (token) {
       callAPI("/getuser", "GET", null, token)
         .then((res) => {
-          console.log("hi", res);
           this.setState({ userInfo: res.data, loggedIn: true });
         })
         .catch((err) => {
