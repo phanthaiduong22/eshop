@@ -43,6 +43,7 @@ class Menu extends Component {
     super(props);
     this.state = {
       redirect: "",
+      searchValue: "",
     };
   }
   onLogout = () => {
@@ -50,38 +51,57 @@ class Menu extends Component {
     window.location.reload();
     this.setState({ redirect: "/" });
   };
+
+  searchChange = (event) => {
+    this.setState({ searchValue: event.target.value });
+  };
+
+  onEnterPress = (e) => {
+    if (e.keyCode == 13 && e.shiftKey == false) {
+      e.preventDefault();
+      this.onSearchSubmit();
+    }
+  };
+  onSearchSubmit = (event) => {
+    if (this.state.searchValue) {
+      localStorage.setItem("reloadInfo", 1);
+      this.setState({ redirect: `/search/${this.state.searchValue}` });
+      event.preventDefault();
+    }
+  };
   render() {
     let { username } = this.props.status.userInfo;
     let { redirect } = this.state;
-    if (redirect) return <Redirect to={redirect} />;
+    if (redirect) {
+      this.setState({ redirect: "" });
+      return <Redirect to={redirect} />;
+    }
     return (
       <React.Fragment>
         <div className="topbarAndNav">
           <div className="container topbar">
             <ul>
-              <li>
-                <Link to="/sell" className="topbaritem">
-                  Kênh người bán
-                </Link>
-              </li>
-              <li className="topbaritem"> | </li>
-              <li>
-                <Link to="/search" className="topbaritem">
-                  Search
-                </Link>
-              </li>
-              <li className="topbaritem"> | </li>
-              <li>
-                <Link to="/login" className="topbaritem">
-                  Đăng nhập
-                </Link>
-              </li>
-              <li className="topbaritem"> | </li>
-              <li>
-                <Link to="/register" className="topbaritem">
-                  Đăng ký
-                </Link>
-              </li>
+              {!this.props.status.loggedIn ? (
+                <>
+                  <li>
+                    <Link to="/login" className="topbaritem">
+                      Đăng nhập
+                    </Link>
+                  </li>
+                  <li className="topbaritem"> | </li>
+                  <li>
+                    <Link to="/register" className="topbaritem">
+                      Đăng ký
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <Link to="/sell" className="topbaritem">
+                    Kênh người bán
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
           <nav className="navbar navbar-expand-lg navbar-dark bg-nav-custom">
@@ -107,9 +127,18 @@ class Menu extends Component {
                 {/*<ul className="navbar-nav">{this.showMenus(menus)}</ul>*/}
                 <div className="navbar-nav mr-auto">
                   <div class="input-group search-bar">
-                    <input type="text" class="form-control" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      onChange={this.searchChange}
+                      onKeyDown={this.onEnterPress}
+                    />
                     <span class="input-group-btn">
-                      <button class="btn btn-primary btn-search" type="button">
+                      <button
+                        class="btn btn-primary btn-search"
+                        type="button"
+                        onClick={this.onSearchSubmit}
+                      >
                         <FontAwesomeIcon icon={faSearch} /> Tìm kiếm
                       </button>
                     </span>
@@ -169,22 +198,6 @@ class Menu extends Component {
       </React.Fragment>
     );
   }
-  // showMenus = (menus) => {
-  //   let result = null;
-  //   if (menus.length > 0) {
-  //     result = menus.map((menu, index) => {
-  //       return (
-  //         <MenuLink
-  //           key={index}
-  //           label={menu.name}
-  //           to={menu.to}
-  //           activeOnlyWhenExact={menu.exact}
-  //         />
-  //       );
-  //     });
-  //   }
-  //   return result;
-  // };
 }
 
 export default Menu;
