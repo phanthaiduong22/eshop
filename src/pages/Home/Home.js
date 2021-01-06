@@ -398,7 +398,9 @@ class Home extends Component {
           <Link
             to={{
               pathname: `search/${this.state.categories[i].id}`,
-              param1: "Par1",
+              state: {
+                alo: true,
+              },
             }}
             className="align-items-center d-flex justify-content-between"
           >

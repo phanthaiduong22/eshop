@@ -215,7 +215,15 @@ class ProductItem extends Component {
       <div className="card m-2 rounded">
         <div className="card-body">
           <div className="card-title d-flex align-items-center">
-            <strong>{this.state.searchValue}</strong>
+            {this.state.categories.length > 0 &&
+            (typeof this.state.searchValue == "number" ||
+              this.isNumeric(this.state.searchValue) == true) ? (
+              <strong>
+                {this.state.categories[this.state.searchValue].name}
+              </strong>
+            ) : (
+              <strong>{this.state.searchValue}</strong>
+            )}
           </div>
           {rows}
         </div>

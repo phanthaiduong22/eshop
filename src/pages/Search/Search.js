@@ -13,6 +13,7 @@ class Search extends Component {
 
   render() {
     const { value } = this.props.match.params;
+    console.log(this.props);
     let reloadInfo = localStorage.getItem("reloadInfo");
     if (reloadInfo == 1) {
       localStorage.setItem("reloadInfo", 0);
