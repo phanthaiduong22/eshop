@@ -101,6 +101,7 @@
 .motsanpham .progress{
   border-radius: 10px;
   position: relative;
+  line-height: normal;
 }
 .motsanpham .progress-bar{
   background-color: orangered;
@@ -167,6 +168,7 @@
   width: 20%;
   z-index: 4;
   transition: 0.3s;
+  border: none;
 }
 
 /* tuy chinh hover */

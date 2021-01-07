@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Home.css";
-import CategoryItem from "../../components/CatergoryItem/CategoryItem";
+// import CategoryItem from "../../components/CatergoryItem/CategoryItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
@@ -89,7 +89,7 @@ class Home extends Component {
     let result = [];
     for (let i = start; i < end; i++) {
       result.push(
-        <div className="col-md-3">
+        <div className="col-md-2">
           <div className="motsanpham">
             <div className="layer"></div>
             <div className="layerbox"></div>
@@ -186,11 +186,11 @@ class Home extends Component {
                 ></div>
 
                 {this.state.flashdeals.length > 0 ? (
-                  <small class="justify-content-center d-flex position-absolute w-100">
+                  <small className="justify-content-center d-flex position-absolute w-100">
                     Đã bán {this.state.flashdeals[i].stock}
                   </small>
                 ) : (
-                  <small class="justify-content-center d-flex position-absolute w-100"></small>
+                  <small className="justify-content-center d-flex position-absolute w-100"></small>
                 )}
               </div>
             </div>
@@ -236,7 +236,7 @@ class Home extends Component {
     let result = [];
     for (let i = start; i < end; i++) {
       result.push(
-        <div className="col-md-3">
+        <div className="col-md-2">
           <div className="motsanpham">
             <div className="layer"></div>
             <div className="layerbox"></div>
@@ -416,17 +416,9 @@ class Home extends Component {
     let danhmucReactDom = (
       <div className="card danhmuc cha">
         <div className="card-body">
-          <h5 class="card-title">CATEGORY</h5>
+          <h5 className="card-title">CATEGORY</h5>
           <hr></hr>
           <ul className="list-unstyled">{autodanhmuc}</ul>
-        </div>
-
-        <div className="danhmuc con card">
-          <div className="card-body">
-            <h5 class="card-title">Business</h5>
-            <hr></hr>
-            <ul className="list-unstyled">{autodanhmuc}</ul>
-          </div>
         </div>
       </div>
     );
@@ -479,7 +471,7 @@ class Home extends Component {
       </div>
     );
     return (
-      <div class="container-fluid m-5">
+      <div className="container-fluid m-5">
         <div
           className={`${
             this.state.hienthimodelBox ? "momoaoao hienra" : "momoaoao"
@@ -531,9 +523,9 @@ class Home extends Component {
           <div className="col-md-8">{bentraidanhmuc}</div>
         </div>
         <br />
-        {this.autoFlashProduct(2, 4)}
+        {this.autoFlashProduct(2, 6)}
         <br />
-        {this.autoCommonProduct(3, 4)}
+        {this.autoCommonProduct(2, 6)}
       </div>
     );
   }
