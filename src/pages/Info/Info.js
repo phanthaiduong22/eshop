@@ -93,6 +93,16 @@ class Info extends Component {
 
   sendUserInfo = () =>
   {
+    if (this.state.userInfo.password === this.state.oldPassword &&
+      this.state.newPassword === this.state.confirmPassword)
+    {
+      this.setState(prevState => {
+        let userInfo = Object.assign({}, prevState.userInfo);  
+        userInfo.password = this.state.newPassword;
+        return { userInfo };           
+      });
+    }
+
     console.log("User info");
     if (this.state.token) {
       console.log(this.state.userInfo);
