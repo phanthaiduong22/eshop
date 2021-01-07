@@ -58,7 +58,7 @@ class Menu extends Component {
       <React.Fragment>
         <div className="topbarAndNav">
           <div className="container topbar">
-            <ul>
+            <ul className="ul-inline">
               <li>
                 <Link to="/sell" className="topbaritem">
                   Kênh người bán
@@ -116,7 +116,7 @@ class Menu extends Component {
                   </div>
                 </div>
                 <ul
-                  class="navbar-nav"
+                  class="navbar-nav ul-inline"
                   style={{ display: "flex", alignItems: "center" }}
                 >
                   <li class="nav-item">

@@ -4,6 +4,7 @@ import callAPI from "./utils/apiCaller";
 import "./App.css";
 import Menu from "./components/Menu/Menu";
 import routes from "./routes";
+import Footer from "./components/Footer/Footer";
 
 class App extends Component {
   constructor(props) {
@@ -42,6 +43,7 @@ class App extends Component {
           <div className="container-fluid">
             <div className="row">{this.showContentMenus(routes)}</div>
           </div>
+         <Footer/>
         </div>
       </Router>
     );
