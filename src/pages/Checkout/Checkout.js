@@ -15,6 +15,9 @@ class Checkout extends Component {
     this.state = {
       products: [],
       userInfo: [],
+      productList: [],
+      payment: "cash",
+      totalPrice: 0,
       token: "",
     };
   }
@@ -29,6 +32,7 @@ class Checkout extends Component {
         let info = res.data[0];
         console.log(this.state.userInfo)
         let realInfo = {
+          id: info.id,
           name: info.name,
           email: info.email,
           phone: info.phone,
@@ -48,15 +52,14 @@ class Checkout extends Component {
     console.log(this.state.token);
     callAPI("/checkout/getProducts", "GET", null, this.state.token)
       .then((res) => {
-        console.log(res.data);
-
+        let total = 0;
+        this.setState({productList: res.data});
         let product_groups = res.data.reduce( (acc, p) => {
           acc[p.store_id] = acc[p.store_id] || [];
           acc[p.store_id].push(p);
+          total += p.price;
           return acc;
         }, {});
-    
-        console.log(product_groups);
     
         let packages_ = Object.values(product_groups).map((group, i) => (
           {
@@ -68,13 +71,55 @@ class Checkout extends Component {
           }
         ));
 
-        this.setState({ products: packages_ });
+        this.setState({ products: packages_ , totalPrice: total});
       })
       .catch((error) => {
         console.log(error);
       });
     }
   };
+
+  sendOrder = () =>
+  {
+    let order = {};
+    order["orderInfo"] = {
+      transport: 0,
+      status: 1,
+      payment: this.state.payment,
+      user_id: this.state.userInfo.id,
+      totalprice: this.state.totalPrice
+    }
+
+    order["products"] = this.state.productList;
+
+    console.log(order);
+
+    if (this.state.token) {
+      callAPI("/checkout/insertOder", "POST", order, this.state.token)
+        .then((res) => {console.log("add oder successful")})
+        .catch((e) => {console.log(e);})
+    }
+
+    let data = {};
+    data["productids"] = this.state.productList.map(p => p.id);
+
+    
+
+    //delete old products from cart
+    if (this.state.token) {
+      callAPI("/info/deleteCartCheckout", "POST", data, this.state.token)
+        .then((res) => {console.log("add oder successful")})
+        .catch((e) => {console.log(e);})
+    }
+
+  }
+
+  handleChangePayment = (e) =>
+  {
+    this.setState({payment: e.target.value});
+    console.log(this.state.payment);
+  }
+
 
   getCheckoutData = () => {
     this.getProducts();
@@ -84,24 +129,9 @@ class Checkout extends Component {
   componentWillMount = () => {
     let token_ = localStorage.getItem("token");
 
-    const products = this.getProducts();
-    const info = this.getUserInfo();
-
-    console.log(info);
     this.setState({ token: token_ }, () => {this.getCheckoutData()});
   };
 
-  // getUserInfo = () =>
-  // {
-  //   let info = this.state.userInfo[0];
-  //   console.log(this.state.userInfo)
-  //   return {
-  //     name: info.name,
-  //     email: info.email,
-  //     phone: info.phone,
-  //     address: info.street + ", " + info.ward + ", " + info.district + ", " + info.city,
-  //   }
-  // }
 
 
   render() {
@@ -109,9 +139,6 @@ class Checkout extends Component {
     let allProduct = []
     let sumShipPrice = 0
     let sumPrice = 0
-
-    console.log(this.state.products);
-
 
     let packageComponet = this.state.products.map((pack) => (
       sumShipPrice += pack.price,
@@ -176,37 +203,38 @@ class Checkout extends Component {
     const checkForm = (
       <div class="row mt-3" style={{backgroundColor:"white"}}>
         <div class="col">
-        <div class="form-check form-control-lg alight-middle">
-          <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="cash"></input>
-          <FontAwesomeIcon icon={faMoneyBillAlt} size="1.5x"/>
-          <label class="form-check-label ml-2" for="cash">
-            Thanh toan tien mat
-          </label>
-        </div>
-
-        <div class="form-check form-control-lg">
-          <input class="form-check-input" type="radio" name="paymentMethod" id="visa" value="visa"></input>
-          <i class="fa fa-cc-visa" aria-hidden="true"></i>
-          <label class="form-check-label pl-2" for="visa">
-            Thanh toan bang the Visa, the tin dung quoc te
-          </label>
-        </div>   
+          <div class="form-check form-control-lg alight-middle">
+            <input class="form-check-input" type="radio" onClick={this.handleChangePayment} name="paymentMethod" 
+            id="cash" value="cash" checked></input>
+            <FontAwesomeIcon icon={faMoneyBillAlt} size="1.5x"/>
+            <label class="form-check-label ml-2" for="cash">
+              Thanh toan tien mat
+            </label>
+          </div>
 
           <div class="form-check form-control-lg">
-          <input class="form-check-input" type="radio" name="paymentMethod" id="atm" value="atm"></input>
-          <FontAwesomeIcon icon={faCreditCard} size="1.5x" />
-          <label class="form-check-label pl-2" for="visa">
-            Thanh toan the ATM the noi dia
-          </label>
-        </div>   
+            <input class="form-check-input" type="radio" onClick={this.handleChangePayment} name="paymentMethod" id="visa" value="visa"></input>
+            <i class="fa fa-cc-visa" aria-hidden="true"></i>
+            <label class="form-check-label pl-2" for="visa">
+              Thanh toan bang the Visa, the tin dung quoc te
+            </label>
+          </div>   
 
-          <div class="form-check form-control-lg">
-          <input class="form-check-input" type="radio" name="paymentMethod" id="momo" value="momo"></input>
-          <FontAwesomeIcon icon={faWallet} size="1.5x" />
-          <label class="form-check-label pl-2" for="visa">
-            Thanh toan bang vi dien tu Momo
-          </label>
-        </div>                
+            <div class="form-check form-control-lg">
+            <input class="form-check-input" type="radio" onClick={this.handleChangePayment} name="paymentMethod" id="atm" value="atm"></input>
+            <FontAwesomeIcon icon={faCreditCard} size="1.5x" />
+            <label class="form-check-label pl-2" for="visa">
+              Thanh toan the ATM the noi dia
+            </label>
+          </div>   
+
+            <div class="form-check form-control-lg">
+            <input class="form-check-input" type="radio" onClick={this.handleChangePayment} name="paymentMethod" id="momo" value="momo"></input>
+            <FontAwesomeIcon icon={faWallet} size="1.5x" />
+            <label class="form-check-label pl-2" for="visa">
+              Thanh toan bang vi dien tu Momo
+            </label>
+          </div>                
         </div>
       </div>
     )
@@ -247,7 +275,7 @@ class Checkout extends Component {
           <h3 class="text-center" style={{color:"red", fontSize:"30px", fontWeight:"bold"}}>{sumShipPrice+sumPrice} d</h3>
           
           <div class="col text-center mt-2">
-            <button type="button" class="btn btn-danger btn-lg" style={{width:"70%", textAlign:"center"}}>Thanh toan</button>
+            <button type="button" class="btn btn-danger btn-lg" onClick={this.sendOrder} style={{width:"70%", textAlign:"center"}}>Thanh toan</button>
           </div>
           
       </div>
