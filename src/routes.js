@@ -12,7 +12,7 @@ import Sell from "./pages/Sell/Sell";
 import AddNewProduct from "./pages/AddNewProduct/AddNewProduct";
 import SellerListProduct from "./pages/SellerListProduct/SellerListProduct";
 import SellerOrders from "./pages/SellerOrders/SellerOrders";
-
+import Orders from "./pages/Info/Customer_Orders";
 const routes = [
   {
     path: "/",
@@ -75,10 +75,16 @@ const routes = [
     main: () => <SellerOrders />,
   },
   {
+    path:"/orders",
+    exact:true,
+    main:()=><Orders/>
+  },
+  {
     path: "",
     exact: false,
     main: () => <NotFound />,
-  },
+  }
+  
 ];
 
 export default routes;

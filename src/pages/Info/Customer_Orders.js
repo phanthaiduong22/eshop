@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import callAPI from "../../utils/apiCaller";
-import SellerSideBar from "../../components/SellerSideBar/SellerSideBar";
-import "./SellerOrders.css";
-import OrderList from "./OrdersList"
-class SellerOrders extends Component {
+import OrderList from "../SellerOrders/OrdersList";
+class Orders extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -13,7 +11,7 @@ class SellerOrders extends Component {
   }
   getOrder = () => {
     if (this.state.token) {
-      callAPI("/storegetorder", "GET", null, this.state.token)
+      callAPI("/usergetorder", "GET", null, this.state.token)
         .then((res) => {
           console.log(res.data);
           this.setState({ orders: res.data });
@@ -24,27 +22,12 @@ class SellerOrders extends Component {
     }
   };
 
-  pushOrder=(order)=>{
-    if (this.state.token) {
-      callAPI("/pushorder", "POST", order, this.state.token)
-        .then((res) => {
-          if (res.data == "updated OK") {
-            this.getOrder();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }
-
   componentDidMount = () => {
     let token_ = localStorage.getItem("token");
     this.setState({ token: token_ }, function () {
       this.getOrder();
     });
   };
- 
 
   render() {
     let orders = {
@@ -61,12 +44,9 @@ class SellerOrders extends Component {
         });
     
         console.log(orders);
-
-    return (
-      <div className="container-fluid ">
-        <div className="row m-5 ">
-          <SellerSideBar />
-          <div className="col-md">
+      
+        return(
+          <div className="container-fluid ">
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">Danh sách đơn hàng</h4>
@@ -167,10 +147,7 @@ class SellerOrders extends Component {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    );
+        );
   }
 }
-
-export default SellerOrders;
+export default Orders;

@@ -133,7 +133,7 @@ class Cart extends Component {
                           </label>
                         </div>
                         <div className="col-sm-5 col-md-4 col-lg-2 col-xl-2">
-                          <Link to={"/product/"+store["product_id"]}>
+                          <Link to={"/product?id="+store["product_id"]}>
                           <div className="image">
                             {store["image_url"] ? (
                               <img
@@ -152,7 +152,7 @@ class Cart extends Component {
                           </Link>
                         </div>
                         <div className="col-sm-6 col-md-7 col-lg-5 col-xl-6">
-                        <Link to={"/product/"+store["product_id"]}>
+                        <Link to={"product?id="+store["product_id"]}>
                           <h6>{store["product_name"]}</h6>
                           </Link>
                           <a
