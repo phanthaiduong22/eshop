@@ -33,18 +33,15 @@ class Info extends Component {
       error: "",
       token: "",
       redirect: "",
-      userInfo: {
-        name: "Nguyen Hoang Thai Duong",
-        phone: "0123456789",
-        email: "jgehgejr@gmail.com",
-        sex: 1,
-        birthDate: new Date(2000, 11, 2),
-        password: "gegewgaewt"
-      }
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+      validate: false,
+      userInfo: {}
     };
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     let token = localStorage.getItem("token");
     this.setState({ token });
     if (token) {
@@ -56,6 +53,21 @@ class Info extends Component {
           this.setState({ exp: data.exp });
         })
         .catch((err) => console.log(err));
+
+      callAPI("/info/getInfo", "GET", null, token)
+        .then((res) => {
+          console.log(res.data);
+          let info = res.data[0];
+          info.birthdate = new Date(info.birthdate.replace(' ', 'T'));
+          if (info.sex){
+            info.sex = "true";
+          }
+          else{
+            info.sex = "false";
+          }
+          this.setState({userInfo: info});
+        })
+        .catch((err) => console.log(err));
     }
   };
 
@@ -63,7 +75,42 @@ class Info extends Component {
     localStorage.setItem("token", "");
     this.setState({ redirect: true });
   };
-  
+
+  handleChangeInput = (event) =>
+  {
+    this.setState(prevState => {
+      let userInfo = Object.assign({}, prevState.userInfo);  
+      userInfo[event.target.name] = event.target.value;
+      console.log(event.target.value);
+      return { userInfo };           
+    })
+  };
+
+  handleChangePass = (event) =>
+  {
+    this.state({[event.target.name]: event.target.value});
+  }
+
+  sendUserInfo = () =>
+  {
+    console.log("User info");
+    if (this.state.token) {
+      console.log(this.state.userInfo);
+      callAPI("/info/pushUserInfo", "POST", this.state.userInfo, this.state.token)
+        .then((res) => {
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
+  }
+
+  handleSubmit = (e) =>
+  {
+    console.log("Submmittsd");
+    e.preventDefault();
+    this.sendUserInfo();
+  }
 
   render() {
     let { username, iat, exp, redirect } = this.state;
@@ -120,12 +167,12 @@ class Info extends Component {
             <form class="ml-3 mt-3 mr-4">
               <div class="form-group">
                 <label for="text">Ho va ten</label>
-                <input type="name" class="form-control" id="name" value={userInfo.name}></input>
+                <input type="name" class="form-control" id="name" name="name" value={userInfo.name} onChange={this.handleChangeInput}></input>
               </div>
 
               <label for="text">So dien thoai</label>
               <div class="input-group">
-                <input type="name" class="form-control" placeholder="phoneNumber" value={userInfo.phone} aria-describedby="basic-addon2"></input>
+                <input type="name" class="form-control" name="phone" onChange={this.handleChangeInput} value={userInfo.phone} required></input>
                 <input type="name" class="form-control" placeholder="Nhap ma OTP xac thuc" aria-describedby="basic-addon2"></input>
                 <div class="input-group-append" style={{marginTop:"-0.5em"}}>
                   <button class="btn btn-success" type="button">Gui ma xac thuc</button>
@@ -134,8 +181,8 @@ class Info extends Component {
 
               <label for="text">Email</label>
               <div class="input-group">
-                <input type="email" class="form-control" placeholder="phoneNumber"
-                value={userInfo.email} aria-describedby="email" disabled="true"></input>
+                <input type="email" class="form-control" name="email" onChange={this.handleChangeInput}
+                value={userInfo.email} aria-describedby="email"></input>
                 <div class="input-group-append" style={{marginTop:"-0.5em"}}>
                   <button class="btn btn-success" type="button">Chinh sua</button>
                  </div>
@@ -145,13 +192,9 @@ class Info extends Component {
                 <div class="col-md">
                   <div class="form-group">
                   <label for="sex">Gioi tinh</label>
-                  <select class="form-control" id="sex">
-                    {
-                      sexs.map((sex) =>(
-                        <option key={sex.id} value={sex.id} 
-                        selected={userInfo.sex === sex.id}>{sex.name}</option>
-                      ))
-                    }
+                  <select class="form-control" id="sex" name="sex" value={userInfo.sex} onChange={this.handleChangeInput}>
+                    <option value="true" >Nam</option>
+                    <option value="false" >Nu</option>
                   </select>
                   </div>
                 </div>
@@ -160,10 +203,12 @@ class Info extends Component {
                   <br></br>
 
                   <DayPickerInput
-                    value={userInfo.birthDate}
+                    value={userInfo.birthdate}
                     formatDate={formatDate}
                     format={FORMAT}
                     parseDate={parseDate}
+                    name="birthdate"
+                    onChange={this.handleChangeInput}
                   />
                 </div>
               </div>
@@ -179,24 +224,24 @@ class Info extends Component {
                   <form class="ml-2 mt-2 mr-4">
                     <div class="form-group">
                       <label for="text">Nhap mat khau cu</label>
-                      <input type="name" class="form-control" id="name"></input>
+                      <input type="password" class="form-control" id="name"></input>
                     </div>
 
                     <div class="form-group">
                       <label for="text">Nhap mat khau moi</label>
-                      <input type="name" class="form-control" id="name" placeholder="Mat khau phai nhieu hon 6 ky tu"></input>
+                      <input type="password" class="form-control" id="name" placeholder="Mat khau phai nhieu hon 6 ky tu"></input>
                     </div>
 
                     <div class="form-group">
                       <label for="text">Nhap lai mat khau moi</label>
-                      <input type="name" class="form-control" id="name"></input>
+                      <input type="password" class="form-control" id="name"></input>
                     </div>
                   </form>
                 </div>
               </div>
 
               <div class="col text-center mt-2">
-                <button type="button" class="btn btn-success" style={{width:"30%", textAlign:"center"}}><strong>Luu lai</strong></button>
+                <button type="submit" class="btn btn-success" onClick={this.handleSubmit} style={{width:"30%", textAlign:"center"}}><strong>Luu lai</strong></button>
                </div>
             </form>
           </div>

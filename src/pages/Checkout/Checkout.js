@@ -18,58 +18,6 @@ class Checkout extends Component {
       token: "",
     };
   }
-  states = 
-  {
-    packages: 
-    [
-      {
-        id: 1,
-        agencyName: "Giao hang nhanh",
-        arriveDate: "22/5/2020",
-        price: 20000,
-        productList: [
-          {
-            id: 1,
-            name: "May tinh bang Air IPad",
-            size: 1,
-            price: 2000000
-          },
-          {
-            id: 2,
-            name: "May tinh bang Air IPad2",
-            size: 1,
-            price: 2000000
-          }
-        ]
-      },
-      {
-        id: 2,
-        agencyName: "Giao Hang tiet kiem",
-        arriveDate: "22/5/2020",
-        price: 200000,
-        productList: [
-          {
-            id: 1,
-            name: "May tinh bang Air IPad",
-            size: 3,
-            price: 2000000
-          },
-          {
-            id: 2,
-            name: "May tinh bang Air IPad2",
-            size: 4,
-            price: 2000000
-          }
-        ]
-      }
-    ],
-    reciver:{
-      name: "Nguyen Hoang Thai Duong",
-      address: "24, Phan Uyen, Phuong 4, Quan 10, TP. HCM",
-      phone: "0123456789",
-      email: "rgwrgjrhw@gmail.com"
-    }
-  }
 
   getUserInfo = () => {
     if (this.state.token) {
@@ -77,7 +25,17 @@ class Checkout extends Component {
     callAPI("/checkout/getUserInfo", "GET", null, this.state.token)
       .then((res) => {
         console.log(res.data);
-        this.setState({ userInfo: res.data });
+
+        let info = res.data[0];
+        console.log(this.state.userInfo)
+        let realInfo = {
+          name: info.name,
+          email: info.email,
+          phone: info.phone,
+          address: info.street + ", " + info.ward + ", " + info.district + ", " + info.city,
+        }
+
+        this.setState({ userInfo: realInfo });
       })
       .catch((error) => {
         console.log(error);
@@ -91,7 +49,26 @@ class Checkout extends Component {
     callAPI("/checkout/getProducts", "GET", null, this.state.token)
       .then((res) => {
         console.log(res.data);
-        this.setState({ products: res.data });
+
+        let product_groups = res.data.reduce( (acc, p) => {
+          acc[p.store_id] = acc[p.store_id] || [];
+          acc[p.store_id].push(p);
+          return acc;
+        }, {});
+    
+        console.log(product_groups);
+    
+        let packages_ = Object.values(product_groups).map((group, i) => (
+          {
+            id: i,
+            agencyName: "Giao Hang tiet kiem",
+            arriveDate: "22/5/2020",
+            price: 200000,
+            productList: group
+          }
+        ));
+
+        this.setState({ products: packages_ });
       })
       .catch((error) => {
         console.log(error);
@@ -104,7 +81,7 @@ class Checkout extends Component {
     this.getUserInfo();
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     let token_ = localStorage.getItem("token");
 
     const products = this.getProducts();
@@ -128,32 +105,15 @@ class Checkout extends Component {
 
 
   render() {
-    const reciver = this.states.reciver;
+    const reciver = this.state.userInfo;
     let allProduct = []
     let sumShipPrice = 0
     let sumPrice = 0
 
-    let product_groups = this.state.products.reduce( (acc, p) => {
-      acc[p.store_id] = acc[p.store_id] || [];
-      acc[p.store_id].push(p);
-      return acc;
-    }, {});
+    console.log(this.state.products);
 
-    console.log(product_groups);
 
-    let packages_ = Object.values(product_groups).map((group, i) => (
-      {
-        id: i,
-        agencyName: "Giao Hang tiet kiem",
-        arriveDate: "22/5/2020",
-        price: 200000,
-        productList: group
-      }
-    ));
-
-    console.log(packages_);
-
-    let packageComponet = packages_.map((pack) => (
+    let packageComponet = this.state.products.map((pack) => (
       sumShipPrice += pack.price,
       <div class="container ml-2 mr-1 my-2 border">
             <div class="d-flex flex-row">
