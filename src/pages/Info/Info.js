@@ -122,7 +122,6 @@ class Info extends Component {
   handleSubmit = (e) =>
   {
     console.log("Submmittsd");
-    e.preventDefault();
     this.sendUserInfo();
   }
 

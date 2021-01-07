@@ -6,7 +6,6 @@ import callAPI from "../../utils/apiCaller";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShippingFast, faAddressCard, faMapMarkedAlt, faMobileAlt, faAt
 , faMoneyBillAlt, faCreditCard, faWallet} from '@fortawesome/free-solid-svg-icons'
-import token from "../../reducers/token";
 
 
 class Checkout extends Component {
