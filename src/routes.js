@@ -8,6 +8,10 @@ import Product from "./pages/Product/Product";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Info from "./pages/Info/Info";
+import Sell from "./pages/Sell/Sell";
+import AddNewProduct from "./pages/AddNewProduct/AddNewProduct";
+import SellerListProduct from "./pages/SellerListProduct/SellerListProduct";
+import SellerOrders from "./pages/SellerOrders/SellerOrders";
 
 const routes = [
   {
@@ -16,14 +20,14 @@ const routes = [
     main: () => <Home />,
   },
   {
-    path: "/search",
+    path: "/search/:value",
     exact: true,
-    main: () => <Search />,
+    main: ({ match }) => <Search match={match} />,
   },
   {
-    path: "/product/:id",
+    path: "/product",
     exact: true,
-    main: () => <Product />,
+    main: ({ match }) => <Product match={match} />,
   },
   {
     path: "/checkout",
@@ -49,6 +53,26 @@ const routes = [
     path: "/info",
     exact: true,
     main: () => <Info />,
+  },
+  {
+    path: "/sell",
+    exact: true,
+    main: () => <Sell />,
+  },
+  {
+    path: "/sell/addnewproduct",
+    exact: true,
+    main: () => <AddNewProduct />,
+  },
+  {
+    path: "/sell/listproduct",
+    exact: true,
+    main: () => <SellerListProduct />,
+  },
+  {
+    path: "/sell/orders",
+    exact: true,
+    main: () => <SellerOrders />,
   },
   {
     path: "",

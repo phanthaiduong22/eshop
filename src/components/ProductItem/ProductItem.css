@@ -1,4 +1,4 @@
-.cha{
+.cha {
   position: relative;
 }
 .danhmuc li a {
@@ -13,18 +13,17 @@
 .danhmuc li a:hover {
   color: #ff173c;
 }
-.danhmuc li a:hover .icondanhmuc{
-  transform: scale(1.5) ;
+.danhmuc li a:hover .icondanhmuc {
+  transform: scale(1.5);
   transition: 0.1s;
 }
 
-
-.icondanhmuc{
+.icondanhmuc {
   transition: 0.1s;
   height: 20px;
 }
 
-.con{
+.con {
   position: absolute;
   top: 0%;
   right: 0;
@@ -39,17 +38,17 @@
 .bentraidanhmuc li {
   display: inline-block;
 }
-.bentraidanhmuc li a{
+.bentraidanhmuc li a {
   font-weight: bold;
   text-decoration: none;
   color: white;
 }
 
-.bentraidanhmuc li a:hover{
+.bentraidanhmuc li a:hover {
   color: orangered;
 }
 
-.motsanpham{
+.motsanpham {
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -58,7 +57,7 @@
   display: inline-block;
 }
 
-.motsanpham .banner{
+.motsanpham .banner {
   position: absolute;
   width: 15%;
   height: 10%;
@@ -67,74 +66,74 @@
   z-index: 2;
 }
 
-.motsanpham .anhsp{
+.motsanpham .anhsp {
   position: absolute;
-  top:0%;
-  left:0%;
+  top: 0%;
+  left: 0%;
   width: 100%;
   height: 70%;
   border-radius: 5px;
 }
 
-.motsanpham .tieude, .motsanpham .thanhbar, .motsanpham .gia{
+.motsanpham .tieude,
+.motsanpham .thanhbar,
+.motsanpham .gia {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.motsanpham .tieude{
+.motsanpham .tieude {
   bottom: 20%;
   font-weight: bold;
 }
-.motsanpham .gia{
+.motsanpham .gia {
   bottom: 12%;
   font-size: large;
-  color: orangered;  
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: orangered;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
-.motsanpham .thanhbar{
+.motsanpham .thanhbar {
   bottom: 5%;
-  width:80% ;
+  width: 80%;
 }
 
-.motsanpham .progress{
+.motsanpham .progress {
   border-radius: 10px;
   position: relative;
 }
-.motsanpham .progress-bar{
+.motsanpham .progress-bar {
   background-color: orangered;
   text-align: center;
 }
 
 /* Tuy chinh phan layer control*/
-.motsanpham .layer{
+.motsanpham .layer {
   position: absolute;
   width: 100%;
   height: 70%;
   z-index: 1;
-  background-image: linear-gradient(to right, red , yellow);
+  background-image: linear-gradient(to right, red, yellow);
   opacity: 0;
   transition: 0.3s;
-
 }
 
-.motsanpham .layerbox{
+.motsanpham .layerbox {
   position: absolute;
   width: 120%;
   height: 40%;
   z-index: 2;
-  border:solid 2px rgb(255, 255, 255);
+  border: solid 2px rgb(255, 255, 255);
   top: 35%;
   left: 50%;
-  transform: translateY(-55%) translateX(-50%); 
+  transform: translateY(-55%) translateX(-50%);
   /* ba dau cho nao ko quan trong */
   opacity: 0;
   transition: 0.3s;
-
 }
 
-.motsanpham .controls{
+.motsanpham .controls {
   position: absolute;
   width: 100%;
   height: 70%;
@@ -143,23 +142,22 @@
   justify-content: space-around;
   align-items: center;
   opacity: 0;
-  transform: translateY(23px) ;
+  transform: translateY(23px);
   transition: 0.3s;
-
 }
 
-.motsanpham .controls .iconcontrol{
+.motsanpham .controls .iconcontrol {
   cursor: pointer;
   z-index: 3;
   font-size: x-large;
   color: orangered;
 }
-.motsanpham .controls button:hover{
+.motsanpham .controls button:hover {
   transform: scale(1.25);
   transition: 0.3s;
-} 
+}
 
-.motsanpham .controls button{
+.motsanpham .controls button {
   padding: 5px;
   background-color: white;
   display: inline-block;
@@ -170,41 +168,39 @@
 }
 
 /* tuy chinh hover */
-.motsanpham:hover .layer{
+.motsanpham:hover .layer {
   opacity: 0.3;
   transition: 0.3s;
 }
 
-.motsanpham:hover .layerbox{
+.motsanpham:hover .layerbox {
   opacity: 1;
-  transform:  translateY(-50%) translateX(-50%);
+  transform: translateY(-50%) translateX(-50%);
   transition: 0.3s;
 }
-.motsanpham:hover .controls{
+.motsanpham:hover .controls {
   opacity: 1;
   transform: translateY(0);
   transition: 0.3s;
 }
 
-
 /* danh muc phan khac*/
-.motsanpham .danhmucphanduoi{
+.motsanpham .danhmucphanduoi {
   position: absolute;
   left: 3%;
   bottom: 0%;
 }
-.motsanpham .gia2{
+.motsanpham .gia2 {
   font-size: large;
-  color: orangered;  
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: orangered;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
-.motsanpham .diadiem{
+.motsanpham .diadiem {
   position: absolute;
   bottom: 0%;
   right: 2%;
 }
-
 
 /* hieu ung cho model box */
 .momoaoao {
@@ -238,7 +234,6 @@
   font-size: 20px;
   visibility: hidden;
   transition: 0.3s;
-
 }
 
 .modal_content {
@@ -259,10 +254,8 @@
   visibility: hidden;
 }
 
-
 .modal_show.modal_ef .modal_content {
   opacity: 1;
   transform: rotateY(0deg);
   visibility: visible;
-  
 }

@@ -3,7 +3,6 @@ import "./Login.css";
 import { Link, Redirect } from "react-router-dom";
 import callAPI from "../../utils/apiCaller";
 import Alert from "../../components/Alert/Alert";
-import { connect } from "react-redux";
 class Login extends Component {
   constructor() {
     super();
@@ -39,6 +38,7 @@ class Login extends Component {
         // this.setState({ redirect: true });
         let token = response.data;
         localStorage.setItem("token", token);
+        localStorage.setItem("reloadInfo", 1);
         this.setState({ redirect: "/info" });
       })
       .catch((e) => {
@@ -46,7 +46,7 @@ class Login extends Component {
         console.log(e.response);
       });
   };
-
+  k;
   render() {
     let { error, redirect } = this.state;
     let showerror = null;
@@ -64,6 +64,7 @@ class Login extends Component {
             type="text"
             onChange={this.onUsernameChange}
             placeholder="Enter Username"
+            className="logininput"
             required
           />
 
@@ -74,15 +75,18 @@ class Login extends Component {
             onChange={this.onPasswordChange}
             type="password"
             placeholder="Enter Password"
+            className="logininput"
             required
           />
 
-          <button type="submit">Login</button>
+          <button type="submit" className="login-btn">
+            Login
+          </button>
         </div>
 
         <div className="container" style={{ backgroundColor: "#f1f1f1" }}>
           <Link to={"/"}>
-            <button type="button" className="cancelbtn">
+            <button type="button" className="cancelbtn login-btn">
               Cancel
             </button>
           </Link>
@@ -96,10 +100,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    token: state.token,
-  };
-};
-
-export default connect(mapStateToProps, null)(Login);
+export default Login;

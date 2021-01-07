@@ -1,15 +1,14 @@
 import React, { Component, useState } from "react";
 import callAPI from "../../utils/apiCaller";
 import { Redirect } from "react-router-dom";
-import DayPickerInput from 'react-day-picker/DayPickerInput';
-import 'react-day-picker/lib/style.css';
+import DayPickerInput from "react-day-picker/DayPickerInput";
+import "react-day-picker/lib/style.css";
 
-import { DateUtils } from 'react-day-picker';
-import dateFnsFormat from 'date-fns/format';
-import dateFnsParse from 'date-fns/parse';
+import { DateUtils } from "react-day-picker";
+import dateFnsFormat from "date-fns/format";
+import dateFnsParse from "date-fns/parse";
 
-import { FormGroup, Button, FormControl, Form, ControlLabel } from "react-bootstrap";
-import './Info.css'
+// import { FormGroup, Button, FormControl, Form, ControlLabel } from "react-bootstrap";
 
 function parseDate(str, format, locale) {
   const parsed = dateFnsParse(str, format, new Date(), { locale });
@@ -43,6 +42,11 @@ class Info extends Component {
 
   componentWillMount = () => {
     let token = localStorage.getItem("token");
+    let reloadInfo = localStorage.getItem("reloadInfo");
+    if (reloadInfo == 1) {
+      localStorage.setItem("reloadInfo", 0);
+      window.location.reload();
+    }
     this.setState({ token });
     if (token) {
       callAPI("/getinfo", "GET", null, token)
@@ -73,7 +77,7 @@ class Info extends Component {
 
   onLogout = () => {
     localStorage.setItem("token", "");
-    this.setState({ redirect: true });
+    this.setState({ redirect: "/" });
   };
 
   handleChangeInput = (event) =>
@@ -133,49 +137,60 @@ class Info extends Component {
     let sexs = [
       {
         id: 0,
-        name: "Nam"
+        name: "Nam",
       },
 
       {
         id: 1,
-        name: "Nu"
-      }
-    ]
+        name: "Nu",
+      },
+    ];
 
-    const FORMAT = 'dd/MM/yyyy';
+    const FORMAT = "dd/MM/yyyy";
 
     return (
-      <div class="container-fluid" style={{backgroundColor:"#d9d9d9"}}>
-        <div class="row ml-4 mt-3 mb-2 mr-4" id="bar">
-          <div class="col-md-3" style={{backgroundColor:"white"}}>
-            <button class="btn">
-              <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i><strong> Thong tin tai khoan</strong>
+      <div className="container-fluid" style={{ backgroundColor: "#d9d9d9" }}>
+        <div className="row ml-4 mt-3 mb-2 mr-4" id="bar">
+          <div className="col-md-3" style={{ backgroundColor: "white" }}>
+            <button className="btn">
+              <i className="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+              <strong> Thong tin tai khoan</strong>
             </button>
-            <button class="btn">
-              <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i><strong> Gio hang</strong>
+            <button className="btn">
+              <i className="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+              <strong> Gio hang</strong>
             </button>
-            <button class="btn">
-              <i class="fa fa-bell fa-2x" aria-hidden="true"></i><strong> Thong bao</strong>
+            <button className="btn">
+              <i className="fa fa-bell fa-2x" aria-hidden="true"></i>
+              <strong> Thong bao</strong>
             </button>
-            <button class="btn">
-              <i class="fa fa-map-signs fa-2x" aria-hidden="true"></i><strong> Quan ly dia chi</strong>
+            <button className="btn">
+              <i className="fa fa-map-signs fa-2x" aria-hidden="true"></i>
+              <strong> Quan ly dia chi</strong>
             </button>
-            <button class="btn">
-              <i class="fa fa-money fa-2x" aria-hidden="true"></i><strong> Quan ly thanh toan</strong>
+            <button className="btn">
+              <i className="fa fa-money fa-2x" aria-hidden="true"></i>
+              <strong> Quan ly thanh toan</strong>
             </button>
-            <button class="btn">
-              <i class="fa fa-archive fa-2x" aria-hidden="true"></i><strong> Quan ly cua hang</strong>
+            <button className="btn">
+              <i className="fa fa-archive fa-2x" aria-hidden="true"></i>
+              <strong> Quan ly cua hang</strong>
             </button>
-            <button class="btn">
-              <i class="fa fa-commenting fa-2x" aria-hidden="true"></i><strong> Nhan xet cua toi</strong>
+            <button className="btn">
+              <i className="fa fa-commenting fa-2x" aria-hidden="true"></i>
+              <strong> Nhan xet cua toi</strong>
             </button>
-            <button class="btn">
-              <i class="fa fa-bookmark fa-2x" aria-hidden="true"></i><strong> Quan ly ma giam gia</strong>
+            <button className="btn">
+              <i className="fa fa-bookmark fa-2x" aria-hidden="true"></i>
+              <strong> Quan ly ma giam gia</strong>
             </button>
           </div>
-          <div class="col-md ml-4 mr-4 pd-2" style={{backgroundColor:"white"}}>
-            <form class="ml-3 mt-3 mr-4">
-              <div class="form-group">
+          <div
+            className="col-md ml-4 mr-4 pd-2"
+            style={{ backgroundColor: "white" }}
+          >
+            <form className="ml-3 mt-3 mr-4">
+              <div className="form-group">
                 <label for="text">Ho va ten</label>
                 <input type="name" class="form-control" id="name" name="name" value={userInfo.name} onChange={this.handleChangeInput}></input>
               </div>
@@ -208,7 +223,7 @@ class Info extends Component {
                   </select>
                   </div>
                 </div>
-                <div class="col-md">
+                <div className="col-md">
                   <label for="text">Ngay sinh</label>
                   <br></br>
 
@@ -224,25 +239,32 @@ class Info extends Component {
               </div>
 
               <p>
-                <button class="btn btn-primary " type="button" data-toggle="collapse" 
-                data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style={{width:"30%", textAlign:"center"}}>
+                <button
+                  className="btn btn-primary "
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#collapseExample"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                  style={{ width: "30%", textAlign: "center" }}
+                >
                   Doi mat khau
                 </button>
               </p>
-              <div class="collapse" id="collapseExample">
-                <div class="card card-body">
-                  <form class="ml-2 mt-2 mr-4">
-                    <div class="form-group">
+              <div className="collapse" id="collapseExample">
+                <div className="card card-body">
+                  <form className="ml-2 mt-2 mr-4">
+                    <div className="form-group">
                       <label for="text">Nhap mat khau cu</label>
                       <input type="password" class="form-control" id="name"></input>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="text">Nhap mat khau moi</label>
                       <input type="password" class="form-control" id="name" placeholder="Mat khau phai nhieu hon 6 ky tu"></input>
                     </div>
 
-                    <div class="form-group">
+                    <div className="form-group">
                       <label for="text">Nhap lai mat khau moi</label>
                       <input type="password" class="form-control" id="name"></input>
                     </div>
