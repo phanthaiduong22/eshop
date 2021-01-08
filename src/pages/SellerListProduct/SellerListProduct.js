@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ProductItem from "../../components/ProductItem/ProductItem";
 import SellerSideBar from "../../components/SellerSideBar/SellerSideBar";
 import SellerProductItem from "../../components/SellerProductItem/SellerProductItem";
 import callAPI from "../../utils/apiCaller";

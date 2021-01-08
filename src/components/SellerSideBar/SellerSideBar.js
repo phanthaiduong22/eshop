@@ -19,7 +19,9 @@ class SellerSideBar extends Component {
   listOrders = () => {
     this.setState({ redirect: "/sell/orders" });
   };
-
+  storeInfo=()=>{
+    this.setState({redirect:"/sell/info"})
+  }
   render() {
     let { redirect } = this.state;
     if (redirect) {
@@ -30,6 +32,27 @@ class SellerSideBar extends Component {
       <div className="col-md-3 shadow p-3 mb-5 bg-secondary rounded d-flex justify-content-center">
         <div className="card ">
           <div className="card text-black bg-white ">
+          <div className="card-body border">
+              <h4 className="card-title">Quản lý cửa hàng</h4>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={this.storeInfo}
+              >
+                Thông tin cửa hàng
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={this.storeInfo}
+                style={{marginTop:'1em'}}
+                onClick={e=>{
+                  this.setState({redirect:"/sell"})
+                }}
+              >
+                Thống kê cửa hàng
+              </button>
+            </div>
             <div className="card-body border ">
               <h4 className="card-title ">Quản lý sản phẩm</h4>
               <button
@@ -43,6 +66,7 @@ class SellerSideBar extends Component {
                 type="button"
                 className="btn btn-secondary"
                 onClick={this.addNewProduct}
+                style={{marginTop:'1em'}}
               >
                 Đăng sản phẩm mới
               </button>
