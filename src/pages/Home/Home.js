@@ -23,7 +23,6 @@ import to3 from "./banner4.png";
 import nho1 from "./banner1.png";
 import nho2 from "./banner2.png";
 import Carousel from "react-bootstrap/Carousel";
-import sp from "./sp.jpg";
 import { Link } from "react-router-dom";
 import sale from "./sale.png";
 import sale2 from "./sale2.png";
@@ -300,7 +299,7 @@ class Home extends Component {
                 style={{ width: "100%" }}
               ></img>
             ) : (
-              <img className="anhsp" src={sp} style={{ width: "100%" }}></img>
+              <img className="anhsp" src="" style={{ width: "100%" }}></img>
             )}
 
             {this.state.common.length > 0 ? (
@@ -489,7 +488,7 @@ class Home extends Component {
         >
           <div className="modal_content card">
             <form className="card-body" onSubmit={this.onSubmitSignIn}>
-              <div>Xin loi, ban phai dang nhap de thuc hien thao tac nay</div>
+              <div className="h4">Xin lỗi bạn phải đăng nhập để thực hiện thao tác này</div>
               <div className="form-group">
                 <label for="exampleInputEmail1">Username</label>
                 <input
@@ -516,6 +515,9 @@ class Home extends Component {
               </button>
             </form>
           </div>
+
+
+          
         </div>
 
         <div className="row">
@@ -582,9 +584,9 @@ class Home extends Component {
     )
       .then((response) => {
         alert(
-          "Them gio hang thanh cong, gio hang cua ban dang chua " +
+          "Thêm vào giỏ hàng thành công\n\nGiỏ hàng của bạn đang chứa " +
             response.data[0].tongsohang +
-            "san pham\r\n Tong gia tri" +
+            " sản phầm\r\nTổng giá trị " +
             response.data[0].tonggiatri
         );
       })
