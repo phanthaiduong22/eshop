@@ -62,13 +62,21 @@ class Info extends Component {
         .then((res) => {
           console.log(res.data);
           let info = res.data[0];
-          info.birthdate = new Date(info.birthdate.replace(' ', 'T'));
-          if (info.sex){
-            info.sex = "true";
-          }
-          else{
-            info.sex = "false";
-          }
+          if (info.name != null){
+            console.log("Get birthdate");
+            info.birthdate = new Date(info.birthdate.replace(' ', 'T'));
+            if (info.sex){
+              info.sex = "true";
+            }
+            else{
+              info.sex = "false";
+            }
+           }
+           else {
+            info.birthdate = new Date(1990, 1, 1);
+            info.sex = true;
+           }
+          console.log(info);
           this.setState({userInfo: info});
         })
         .catch((err) => console.log(err));
@@ -86,6 +94,18 @@ class Info extends Component {
       let userInfo = Object.assign({}, prevState.userInfo);  
       userInfo[event.target.name] = event.target.value;
       console.log(event.target.value);
+      return { userInfo };           
+    })
+  };
+
+  handleChangeDate = (date) =>
+  {
+    this.setState(prevState => {
+      let userInfo = Object.assign({}, prevState.userInfo);
+      let birthdate = date;
+      userInfo["birthdate"] = birthdate;
+      console.log("change date");
+      console.log(birthdate);
       return { userInfo };           
     })
   };
@@ -109,8 +129,10 @@ class Info extends Component {
 
     console.log("User info");
     if (this.state.token) {
-      console.log(this.state.userInfo);
-      callAPI("/info/pushUserInfo", "POST", this.state.userInfo, this.state.token)
+      let data = this.state.userInfo;
+      console.log(data);
+      data.birthdate = data.birthdate.toISOString().replace(' ', 'T');
+      callAPI("/info/pushUserInfo", "POST", data, this.state.token)
         .then((res) => {
         })
         .catch((err) => {
@@ -123,6 +145,7 @@ class Info extends Component {
   {
     console.log("Submmittsd");
     this.sendUserInfo();
+    e.preventDefault();
   }
 
   render() {
@@ -232,7 +255,7 @@ class Info extends Component {
                     format={FORMAT}
                     parseDate={parseDate}
                     name="birthdate"
-                    onChange={this.handleChangeInput}
+                    onDayChange={this.handleChangeDate}
                   />
                 </div>
               </div>
