@@ -82,7 +82,7 @@ class Checkout extends Component {
   {
     let order = {};
     order["orderInfo"] = {
-      transport: 0,
+      transport: 1,
       status: 0,
       payment: this.state.payment,
       user_id: this.state.userInfo.id,
