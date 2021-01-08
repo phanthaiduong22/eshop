@@ -13,6 +13,7 @@ import AddNewProduct from "./pages/AddNewProduct/AddNewProduct";
 import SellerListProduct from "./pages/SellerListProduct/SellerListProduct";
 import SellerOrders from "./pages/SellerOrders/SellerOrders";
 import Orders from "./pages/Info/Customer_Orders";
+import SellInfo from "./pages/SellInfo/SellInfo";
 const routes = [
   {
     path: "/",
@@ -78,6 +79,11 @@ const routes = [
     path:"/orders",
     exact:true,
     main:()=><Orders/>
+  },
+  {
+    path:"/sell/info",
+    exact:true,
+    main:()=><SellInfo/>
   },
   {
     path: "",
