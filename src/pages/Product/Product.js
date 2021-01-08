@@ -46,7 +46,11 @@ class Product extends Component {
 
             // for following Shop
 
-                
+            // for Store
+            store:[{description: "Dan ong lich lam",
+            name: "Mens Wear",
+            stars: 5,
+            user_id: 3}]
         
         }
     };
@@ -59,6 +63,19 @@ class Product extends Component {
             this.setState({ 
                 product : response.data,
             });
+             callAPI("/product?action=getStore&id=" + this.state.product[0].store_id,"GET", {
+            })
+              .then((response) => {
+                this.setState({ 
+                    store: response.data
+                });
+                console.log("hieumao");
+
+                console.log(response)
+              })
+              .catch((e) => {
+                console.log(e.response);
+              });
           })
           .catch((e) => {
             console.log(e.response);
@@ -170,7 +187,7 @@ class Product extends Component {
                                     <FontAwesomeIcon icon={faStar} className="ngoisao mr-1" />
                                     <FontAwesomeIcon icon={faStar} className="ngoisao" />
                             </div>
-                            <span className=" ml-1" style={{fontSize: '14px'}}>{this.state.totalEVaStar + " Lượt đánh giá"}</span>
+                            <span className=" ml-1" style={{fontSize: '14px'}}>{(this.state.totalEVaStar ==  null ? 0 :  this.state.totalEVaStar)  + " Lượt đánh giá"}</span>
                             <div className="rank d-flex align-items-center mt-1">
                                 <FontAwesomeIcon icon={faMedal} style={{color:'orange', fontSize:'30px'}} />
                                 <small className="d-inline-block">Top 1 bán chạy nhất trong thế giới di động</small>
@@ -227,7 +244,7 @@ class Product extends Component {
                     <div className="col-md-6 d-flex align-items-end">
                         <img src={home} alt="" className="d-inline-block" style={{width: "100px", height: "100px"}}></img>
                         <div className="d-inline-block ml-2">
-                            <h5>Hazala Store</h5>
+                            <h5>{this.state.store[0].name}</h5>
                             <div className="shopaction">
                                 <div className="btn btn-warning mr-2" type = "button">Xem shop</div>
                                 <div className="btn btn-primary mr-2" type = "button">Chat <FontAwesomeIcon icon={faFacebookMessenger}/></div>
@@ -268,23 +285,23 @@ class Product extends Component {
                         <table>
                             <tr>
                             <td>Thương hiệu</td>
-                            <td>Smith</td>
+                            <td></td>
                             </tr>
                             <tr>
                             <td>Kích thước</td>
-                            <td>40 x 30 x 50</td>
+                            <td></td>
                             </tr>
                             <tr>
                                 <td>Dung lượng</td>
-                                <td>120GB</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>Xuất xứ</td>
-                                <td>Trung Quốc</td>
+                                <td>{this.state.product[0].origin}</td>
                             </tr>
                             <tr>
                                 <td>Tốc độ đọc</td>
-                                <td>200MB.s</td>
+                                <td></td>
                             </tr>
                         </table>
                     </div>
@@ -296,7 +313,7 @@ class Product extends Component {
         <div className="card">
         <div className="card-body">
             <h3>Mô tả sản phẩm</h3>
-        <p style ={{ textAlign:"justify", }}>{this.state.product.description}</p>
+        <p style ={{ textAlign:"justify", }}>{this.state.product[0].description}</p>
         </div>
         </div>
 
@@ -504,11 +521,12 @@ class Product extends Component {
         },token )
           .then((response) => {
             console.log(response);
-            alert("Thêm vào giỏ hàng thành công\n\nGiỏ hàng của bạn đang chứa " +
-            response.data[0].tongsohang +
-            " sản phầm\r\nTổng giá trị " +
-            response.data[0].tonggiatri
-            );
+            alert("Thêm vào giỏ hàng thành công");
+            // \nGiỏ hàng của bạn đang chứa " +
+            // response.data[0].tongsohang +
+            // " sản phầm\r\nTổng giá trị " +
+            // response.data[0].tonggiatri
+            
           })
           .catch((e) => {
             console.log(e.response);

@@ -186,7 +186,7 @@ class Home extends Component {
 
                 {this.state.flashdeals.length > 0 ? (
                   <small className="justify-content-center d-flex position-absolute w-100">
-                    Đã bán {this.state.flashdeals[i].stock}
+                    Số lượng {this.state.flashdeals[i].stock}
                   </small>
                 ) : (
                   <small className="justify-content-center d-flex position-absolute w-100"></small>
@@ -570,7 +570,7 @@ class Home extends Component {
     let price = this.state.currentPRprice;
     let numPr = this.state.soluong;
     //todo: gia su  acesss vo han :v , cai nay su lys sau
-    console.log(idProduct, price);
+    // console.log(idProduct, price);
     let token = localStorage.getItem("token");
     callAPI(
       "/cart?action=add",
@@ -584,15 +584,13 @@ class Home extends Component {
     )
       .then((response) => {
         alert(
-          "Thêm vào giỏ hàng thành công\n\nGiỏ hàng của bạn đang chứa " +
-            response.data[0].tongsohang +
-            " sản phầm\r\nTổng giá trị " +
-            response.data[0].tonggiatri
+          "Thêm vào giỏ hàng thành công"
         );
+        console.log(response);
       })
       .catch((e) => {
-        console.log(e.response);
-        this.toggleModalBox();
+        console.log(e);
+        // this.toggleModalBox();
       });
   }
 
