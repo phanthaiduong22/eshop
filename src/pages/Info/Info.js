@@ -62,13 +62,21 @@ class Info extends Component {
         .then((res) => {
           console.log(res.data);
           let info = res.data[0];
-          info.birthdate = new Date(info.birthdate.replace(' ', 'T'));
-          if (info.sex){
-            info.sex = "true";
-          }
-          else{
-            info.sex = "false";
-          }
+          if (info.name != null){
+            console.log("Get birthdate");
+            info.birthdate = new Date(info.birthdate.replace(' ', 'T'));
+            if (info.sex){
+              info.sex = "true";
+            }
+            else{
+              info.sex = "false";
+            }
+           }
+           else {
+            info.birthdate = new Date(1990, 1, 1);
+            info.sex = true;
+           }
+          console.log(info);
           this.setState({userInfo: info});
         })
         .catch((err) => console.log(err));
@@ -90,27 +98,51 @@ class Info extends Component {
     })
   };
 
+  handleChangeDate = (date) =>
+  {
+    this.setState(prevState => {
+      let userInfo = Object.assign({}, prevState.userInfo);
+      let birthdate = date;
+      userInfo["birthdate"] = birthdate;
+      console.log("change date");
+      console.log(birthdate);
+      return { userInfo };           
+    })
+  };
+
   handleChangePass = (event) =>
   {
-    this.state({[event.target.name]: event.target.value});
+    this.setState({[event.target.name]: event.target.value});
   }
 
   sendUserInfo = () =>
   {
+    console.log(this.state.oldPassword);
+    console.log(this.state.newPassword);
+    console.log(this.state.confirmPassword);
     if (this.state.userInfo.password === this.state.oldPassword &&
       this.state.newPassword === this.state.confirmPassword)
     {
+      console.log("change password");
       this.setState(prevState => {
         let userInfo = Object.assign({}, prevState.userInfo);  
         userInfo.password = this.state.newPassword;
-        return { userInfo };           
-      });
+        console.log(userInfo);
+        return { userInfo };         
+      }, this.modUserInfo);
     }
 
+    
+  }
+
+  modUserInfo = () =>
+  {
     console.log("User info");
     if (this.state.token) {
-      console.log(this.state.userInfo);
-      callAPI("/info/pushUserInfo", "POST", this.state.userInfo, this.state.token)
+      let data = this.state.userInfo;
+      console.log(data);
+      data.birthdate = data.birthdate.toISOString().replace(' ', 'T');
+      callAPI("/info/pushUserInfo", "POST", data, this.state.token)
         .then((res) => {
         })
         .catch((err) => {
@@ -123,6 +155,7 @@ class Info extends Component {
   {
     console.log("Submmittsd");
     this.sendUserInfo();
+    //e.preventDefault();
   }
 
   render() {
@@ -167,9 +200,9 @@ class Info extends Component {
               <i className="fa fa-map-signs fa-2x" aria-hidden="true"></i>
               <strong> Quan ly dia chi</strong>
             </button>
-            <button className="btn">
+            <button className="btn" onClick={e => window.location.href='/orders'}>
               <i className="fa fa-money fa-2x" aria-hidden="true"></i>
-              <strong> Quan ly thanh toan</strong>
+              <strong> Quan ly don hang</strong>
             </button>
             <button className="btn">
               <i className="fa fa-archive fa-2x" aria-hidden="true"></i>
@@ -232,7 +265,7 @@ class Info extends Component {
                     format={FORMAT}
                     parseDate={parseDate}
                     name="birthdate"
-                    onChange={this.handleChangeInput}
+                    onDayChange={this.handleChangeDate}
                   />
                 </div>
               </div>
@@ -255,17 +288,17 @@ class Info extends Component {
                   <form className="ml-2 mt-2 mr-4">
                     <div className="form-group">
                       <label for="text">Nhap mat khau cu</label>
-                      <input type="password" class="form-control" id="name"></input>
+                      <input type="password" onChange={this.handleChangePass} class="form-control" name="oldPassword" id="oldPassword"></input>
                     </div>
 
                     <div className="form-group">
                       <label for="text">Nhap mat khau moi</label>
-                      <input type="password" class="form-control" id="name" placeholder="Mat khau phai nhieu hon 6 ky tu"></input>
+                      <input type="password" onChange={this.handleChangePass} class="form-control" name="newPassword" id="newPassword" placeholder="Mat khau phai nhieu hon 6 ky tu"></input>
                     </div>
 
                     <div className="form-group">
                       <label for="text">Nhap lai mat khau moi</label>
-                      <input type="password" class="form-control" id="name"></input>
+                      <input type="password" onChange={this.handleChangePass} class="form-control" name="confirmPassword" id="confirmPassword"></input>
                     </div>
                   </form>
                 </div>

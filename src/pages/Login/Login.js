@@ -92,8 +92,9 @@ class Login extends Component {
           </Link>
 
           <span className="psw">
-            Forgot <a href="/">password?</a>
+            You don't have account? <a href="/register">Register?</a>
           </span>
+          
         </div>
       </form>
     );

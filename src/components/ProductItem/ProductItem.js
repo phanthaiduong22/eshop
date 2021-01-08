@@ -33,7 +33,7 @@ class ProductItem extends Component {
       .catch((e) => {
         console.log(e.response);
       });
-    callAPI("", "GET", {})
+    callAPI("/search", "GET", {})
       .then((response) => {
         this.setState({
           Allproducts: response.data,
