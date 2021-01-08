@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarked } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 class CartInfo extends Component {
   constructor(props) {
     super();
@@ -39,9 +40,9 @@ class CartInfo extends Component {
           <h6>Tổng cộng</h6>
           <hr></hr>
           <div class="d-flex justify-content-center"><h4 style={{color:"red",margin:"auto"}}>{this.props.totalCost+this.state.transportCost+"đ"}</h4></div>
-
-<button type="button" name="" id="" class="btn btn-danger btn-lg btn-block">Check out</button>
-          
+<Link to="/checkout">
+<button type="button" name="" id="" class="btn btn-danger btn-lg btn-block">Tiếp tục</button>
+</Link>
         </div>
       </div>
     );
