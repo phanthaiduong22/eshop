@@ -112,21 +112,31 @@ class Info extends Component {
 
   handleChangePass = (event) =>
   {
-    this.state({[event.target.name]: event.target.value});
+    this.setState({[event.target.name]: event.target.value});
   }
 
   sendUserInfo = () =>
   {
+    console.log(this.state.oldPassword);
+    console.log(this.state.newPassword);
+    console.log(this.state.confirmPassword);
     if (this.state.userInfo.password === this.state.oldPassword &&
       this.state.newPassword === this.state.confirmPassword)
     {
+      console.log("change password");
       this.setState(prevState => {
         let userInfo = Object.assign({}, prevState.userInfo);  
         userInfo.password = this.state.newPassword;
-        return { userInfo };           
-      });
+        console.log(userInfo);
+        return { userInfo };         
+      }, this.modUserInfo);
     }
 
+    
+  }
+
+  modUserInfo = () =>
+  {
     console.log("User info");
     if (this.state.token) {
       let data = this.state.userInfo;
@@ -278,17 +288,17 @@ class Info extends Component {
                   <form className="ml-2 mt-2 mr-4">
                     <div className="form-group">
                       <label for="text">Nhap mat khau cu</label>
-                      <input type="password" class="form-control" id="name"></input>
+                      <input type="password" onChange={this.handleChangePass} class="form-control" name="oldPassword" id="oldPassword"></input>
                     </div>
 
                     <div className="form-group">
                       <label for="text">Nhap mat khau moi</label>
-                      <input type="password" class="form-control" id="name" placeholder="Mat khau phai nhieu hon 6 ky tu"></input>
+                      <input type="password" onChange={this.handleChangePass} class="form-control" name="newPassword" id="newPassword" placeholder="Mat khau phai nhieu hon 6 ky tu"></input>
                     </div>
 
                     <div className="form-group">
                       <label for="text">Nhap lai mat khau moi</label>
-                      <input type="password" class="form-control" id="name"></input>
+                      <input type="password" onChange={this.handleChangePass} class="form-control" name="confirmPassword" id="confirmPassword"></input>
                     </div>
                   </form>
                 </div>
