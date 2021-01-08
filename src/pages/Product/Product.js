@@ -397,20 +397,40 @@ class Product extends Component {
         return <div class = "container">
         <div className={`${this.state.hienthimodelBox ? "momoaoao hienra" : "momoaoao"}`} onClick={() => {this.toggleModalBox()}}></div>
         <div className={`${this.state.hienthimodelBox ? "modal_box modal_ef modal_show" : "modal_box modal_ef"}`}>
-            <div className="modal_content card">
+            
+            
+        <div className="modal_content card">
             <form className="card-body" onSubmit={this.onSubmitSignIn}>
-            <div>Xin loi, ban phai dang nhap de thuc hien thao tac nay</div>
-            <div className="form-group" >
-            <label for="exampleInputEmail1">Username</label>
-            <input onChange={this.onUsernameChange} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username"></input>
-            </div>
-            <div className="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input onChange={this.onPasswordChange} type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"></input>
-            </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
-            </div>
+              <div className="h4">Xin lỗi bạn phải đăng nhập để thực hiện thao tác này</div>
+              <div className="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input
+                  onChange={this.onUsernameChange}
+                  type="text"
+                  className="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter username"
+                ></input>
+              </div>
+              <div className="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input
+                  onChange={this.onPasswordChange}
+                  type="password"
+                  className="form-control"
+                  id="exampleInputPassword1"
+                  placeholder="Password"
+                ></input>
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            </form>
+          </div>
+
+
+
         </div>
 
         {thongtinchung}
@@ -484,8 +504,10 @@ class Product extends Component {
         },token )
           .then((response) => {
             console.log(response);
-            alert("Them gio hang thanh cong, gio hang cua ban dang chua " + 
-            response.data[0].tongsohang + "san pham\r\n Tong gia tri" + response.data[0].tonggiatri
+            alert("Thêm vào giỏ hàng thành công\n\nGiỏ hàng của bạn đang chứa " +
+            response.data[0].tongsohang +
+            " sản phầm\r\nTổng giá trị " +
+            response.data[0].tonggiatri
             );
           })
           .catch((e) => {

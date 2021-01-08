@@ -20,9 +20,9 @@ const routes = [
     main: () => <Home />,
   },
   {
-    path: "/search",
+    path: "/search/:value",
     exact: true,
-    main: () => <Search />,
+    main: ({ match }) => <Search match={match} />,
   },
   {
     path: "/product",
