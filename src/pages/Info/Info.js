@@ -155,7 +155,7 @@ class Info extends Component {
   {
     console.log("Submmittsd");
     this.sendUserInfo();
-    e.preventDefault();
+    //e.preventDefault();
   }
 
   render() {
@@ -200,9 +200,9 @@ class Info extends Component {
               <i className="fa fa-map-signs fa-2x" aria-hidden="true"></i>
               <strong> Quan ly dia chi</strong>
             </button>
-            <button className="btn">
+            <button className="btn" onClick={e => window.location.href='/orders'}>
               <i className="fa fa-money fa-2x" aria-hidden="true"></i>
-              <strong> Quan ly thanh toan</strong>
+              <strong> Quan ly don hang</strong>
             </button>
             <button className="btn">
               <i className="fa fa-archive fa-2x" aria-hidden="true"></i>
