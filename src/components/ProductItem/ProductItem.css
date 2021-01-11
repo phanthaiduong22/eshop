@@ -78,6 +78,10 @@
 .motsanpham .tieude,
 .motsanpham .thanhbar,
 .motsanpham .gia {
+  white-space: nowrap;
+  width: 13vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

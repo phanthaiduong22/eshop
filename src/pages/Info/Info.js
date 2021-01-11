@@ -36,7 +36,7 @@ class Info extends Component {
       newPassword: "",
       confirmPassword: "",
       validate: false,
-      userInfo: {}
+      userInfo: {},
     };
   }
 
@@ -62,22 +62,20 @@ class Info extends Component {
         .then((res) => {
           console.log(res.data);
           let info = res.data[0];
-          if (info.name != null){
+          if (info.name != null) {
             console.log("Get birthdate");
-            info.birthdate = new Date(info.birthdate.replace(' ', 'T'));
-            if (info.sex){
+            info.birthdate = new Date(info.birthdate.replace(" ", "T"));
+            if (info.sex) {
               info.sex = "true";
-            }
-            else{
+            } else {
               info.sex = "false";
             }
-           }
-           else {
+          } else {
             info.birthdate = new Date(1990, 1, 1);
             info.sex = true;
-           }
+          }
           console.log(info);
-          this.setState({userInfo: info});
+          this.setState({ userInfo: info });
         })
         .catch((err) => console.log(err));
     }
@@ -88,78 +86,70 @@ class Info extends Component {
     this.setState({ redirect: "/" });
   };
 
-  handleChangeInput = (event) =>
-  {
-    this.setState(prevState => {
-      let userInfo = Object.assign({}, prevState.userInfo);  
+  handleChangeInput = (event) => {
+    this.setState((prevState) => {
+      let userInfo = Object.assign({}, prevState.userInfo);
       userInfo[event.target.name] = event.target.value;
       console.log(event.target.value);
-      return { userInfo };           
-    })
+      return { userInfo };
+    });
   };
 
-  handleChangeDate = (date) =>
-  {
-    this.setState(prevState => {
+  handleChangeDate = (date) => {
+    this.setState((prevState) => {
       let userInfo = Object.assign({}, prevState.userInfo);
       let birthdate = date;
       userInfo["birthdate"] = birthdate;
       console.log("change date");
       console.log(birthdate);
-      return { userInfo };           
-    })
+      return { userInfo };
+    });
   };
 
-  handleChangePass = (event) =>
-  {
-    this.setState({[event.target.name]: event.target.value});
-  }
+  handleChangePass = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
-  sendUserInfo = () =>
-  {
+  sendUserInfo = () => {
     console.log(this.state.oldPassword);
     console.log(this.state.newPassword);
     console.log(this.state.confirmPassword);
-    if (this.state.userInfo.password === this.state.oldPassword &&
-      this.state.newPassword === this.state.confirmPassword)
-    {
+    if (
+      this.state.userInfo.password === this.state.oldPassword &&
+      this.state.newPassword === this.state.confirmPassword
+    ) {
       console.log("change password");
-      this.setState(prevState => {
-        let userInfo = Object.assign({}, prevState.userInfo);  
+      this.setState((prevState) => {
+        let userInfo = Object.assign({}, prevState.userInfo);
         userInfo.password = this.state.newPassword;
         console.log(userInfo);
-        return { userInfo };         
+        return { userInfo };
       }, this.modUserInfo);
     }
+  };
 
-    
-  }
-
-  modUserInfo = () =>
-  {
+  modUserInfo = () => {
     console.log("User info");
     if (this.state.token) {
       let data = this.state.userInfo;
       console.log(data);
-      data.birthdate = data.birthdate.toISOString().replace(' ', 'T');
+      data.birthdate = data.birthdate.toISOString().replace(" ", "T");
       callAPI("/info/pushUserInfo", "POST", data, this.state.token)
-        .then((res) => {
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log(err.response);
         });
     }
-  }
+  };
 
-  handleSubmit = (e) =>
-  {
-    console.log("Submmittsd");
+  handleSubmit = (e) => {
+    console.log("Submitted");
     this.sendUserInfo();
     //e.preventDefault();
-  }
+  };
 
   render() {
-    let { username, iat, exp, redirect } = this.state;
+    let { redirect } = this.state;
     if (redirect) {
       return <Redirect to={redirect} />;
     }
@@ -186,35 +176,46 @@ class Info extends Component {
           <div className="col-md-3" style={{ backgroundColor: "white" }}>
             <button className="btn">
               <i className="fa fa-user-circle fa-2x" aria-hidden="true"></i>
-              <strong> Thong tin tai khoan</strong>
+              <strong> Thông tin khách hàng </strong>
             </button>
             <button className="btn">
               <i className="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
-              <strong> Gio hang</strong>
+              <strong>
+                {" "}
+                Giỏ hàng
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </strong>
             </button>
             <button className="btn">
               <i className="fa fa-bell fa-2x" aria-hidden="true"></i>
-              <strong> Thong bao</strong>
+              <strong>
+                {" "}
+                Thông báo
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </strong>
             </button>
             <button className="btn">
               <i className="fa fa-map-signs fa-2x" aria-hidden="true"></i>
-              <strong> Quan ly dia chi</strong>
+              <strong> Quản lý địa chỉ </strong>
             </button>
-            <button className="btn" onClick={e => window.location.href='/orders'}>
+            <button
+              className="btn"
+              onClick={(e) => (window.location.href = "/orders")}
+            >
               <i className="fa fa-money fa-2x" aria-hidden="true"></i>
-              <strong> Quan ly don hang</strong>
+              <strong> Quản lý đơn hàng </strong>
             </button>
             <button className="btn">
               <i className="fa fa-archive fa-2x" aria-hidden="true"></i>
-              <strong> Quan ly cua hang</strong>
+              <strong> Quản lý của hàng </strong>
             </button>
             <button className="btn">
               <i className="fa fa-commenting fa-2x" aria-hidden="true"></i>
-              <strong> Nhan xet cua toi</strong>
+              <strong> Nhận xét của tôi </strong>
             </button>
             <button className="btn">
               <i className="fa fa-bookmark fa-2x" aria-hidden="true"></i>
-              <strong> Quan ly ma giam gia</strong>
+              <strong> Quản lý mã giảm giá </strong>
             </button>
           </div>
           <div
@@ -223,40 +224,75 @@ class Info extends Component {
           >
             <form className="ml-3 mt-3 mr-4">
               <div className="form-group">
-                <label for="text">Ho va ten</label>
-                <input type="name" class="form-control" id="name" name="name" value={userInfo.name} onChange={this.handleChangeInput}></input>
+                <label for="text">Họ và tên</label>
+                <input
+                  type="name"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  value={userInfo.name}
+                  onChange={this.handleChangeInput}
+                ></input>
               </div>
 
-              <label for="text">So dien thoai</label>
+              <label for="text">Số điện thoại</label>
               <div class="input-group">
-                <input type="name" class="form-control" name="phone" onChange={this.handleChangeInput} value={userInfo.phone} required></input>
-                <input type="name" class="form-control" placeholder="Nhap ma OTP xac thuc" aria-describedby="basic-addon2"></input>
-                <div class="input-group-append" style={{marginTop:"-0.5em"}}>
-                  <button class="btn btn-success" type="button">Gui ma xac thuc</button>
-                 </div>
+                <input
+                  type="name"
+                  class="form-control"
+                  name="phone"
+                  onChange={this.handleChangeInput}
+                  value={userInfo.phone}
+                  required
+                ></input>
+                <input
+                  type="name"
+                  class="form-control"
+                  placeholder="Nhập mã OTP xác thực"
+                  aria-describedby="basic-addon2"
+                ></input>
+                <div class="input-group-append" style={{ marginTop: "-0.5em" }}>
+                  <button class="btn btn-success" type="button">
+                    Gửi mã OTP xác thực
+                  </button>
+                </div>
               </div>
 
               <label for="text">Email</label>
               <div class="input-group">
-                <input type="email" class="form-control" name="email" onChange={this.handleChangeInput}
-                value={userInfo.email} aria-describedby="email"></input>
-                <div class="input-group-append" style={{marginTop:"-0.5em"}}>
-                  <button class="btn btn-success" type="button">Chinh sua</button>
-                 </div>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  onChange={this.handleChangeInput}
+                  value={userInfo.email}
+                  aria-describedby="email"
+                ></input>
+                <div class="input-group-append" style={{ marginTop: "-0.5em" }}>
+                  <button class="btn btn-success" type="button">
+                    Chỉnh sửa
+                  </button>
+                </div>
               </div>
 
               <div class="row">
                 <div class="col-md">
                   <div class="form-group">
-                  <label for="sex">Gioi tinh</label>
-                  <select class="form-control" id="sex" name="sex" value={userInfo.sex} onChange={this.handleChangeInput}>
-                    <option value="true" >Nam</option>
-                    <option value="false" >Nu</option>
-                  </select>
+                    <label for="sex">Giới tính</label>
+                    <select
+                      class="form-control"
+                      id="sex"
+                      name="sex"
+                      value={userInfo.sex}
+                      onChange={this.handleChangeInput}
+                    >
+                      <option value="true">Nam</option>
+                      <option value="false">Nữ</option>
+                    </select>
                   </div>
                 </div>
                 <div className="col-md">
-                  <label for="text">Ngay sinh</label>
+                  <label for="text">Ngày sinh</label>
                   <br></br>
 
                   <DayPickerInput
@@ -280,33 +316,59 @@ class Info extends Component {
                   aria-controls="collapseExample"
                   style={{ width: "30%", textAlign: "center" }}
                 >
-                  Doi mat khau
+                  Đổi mật khẩu
                 </button>
               </p>
               <div className="collapse" id="collapseExample">
                 <div className="card card-body">
                   <form className="ml-2 mt-2 mr-4">
                     <div className="form-group">
-                      <label for="text">Nhap mat khau cu</label>
-                      <input type="password" onChange={this.handleChangePass} class="form-control" name="oldPassword" id="oldPassword"></input>
+                      <label for="text">Nhập mật khẩu cũ</label>
+                      <input
+                        type="password"
+                        onChange={this.handleChangePass}
+                        class="form-control"
+                        name="oldPassword"
+                        id="oldPassword"
+                      ></input>
                     </div>
 
                     <div className="form-group">
-                      <label for="text">Nhap mat khau moi</label>
-                      <input type="password" onChange={this.handleChangePass} class="form-control" name="newPassword" id="newPassword" placeholder="Mat khau phai nhieu hon 6 ky tu"></input>
+                      <label for="text">Nhập mật khẩu mới</label>
+                      <input
+                        type="password"
+                        onChange={this.handleChangePass}
+                        class="form-control"
+                        name="newPassword"
+                        id="newPassword"
+                        placeholder="Mat khau phai nhieu hon 6 ky tu"
+                      ></input>
                     </div>
 
                     <div className="form-group">
-                      <label for="text">Nhap lai mat khau moi</label>
-                      <input type="password" onChange={this.handleChangePass} class="form-control" name="confirmPassword" id="confirmPassword"></input>
+                      <label for="text">Nhập lại mật khẩu mới</label>
+                      <input
+                        type="password"
+                        onChange={this.handleChangePass}
+                        class="form-control"
+                        name="confirmPassword"
+                        id="confirmPassword"
+                      ></input>
                     </div>
                   </form>
                 </div>
               </div>
 
               <div class="col text-center mt-2">
-                <button type="submit" class="btn btn-success" onClick={this.handleSubmit} style={{width:"30%", textAlign:"center"}}><strong>Luu lai</strong></button>
-               </div>
+                <button
+                  type="submit"
+                  class="btn btn-success"
+                  onClick={this.handleSubmit}
+                  style={{ width: "30%", textAlign: "center" }}
+                >
+                  <strong>Lưu lại</strong>
+                </button>
+              </div>
             </form>
           </div>
         </div>

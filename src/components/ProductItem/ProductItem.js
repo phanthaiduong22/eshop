@@ -240,10 +240,8 @@ class ProductItem extends Component {
     this.setState({ redirect: "/login" });
   };
 
-  addCartItem() {
-    let idProduct = this.state.currentPRID;
-    let price = this.state.currentPRprice;
-    let numPr = this.state.soluong;
+  addCartItem(idProduct, price) {
+    let numPr = 1;
     let token = localStorage.getItem("token");
     callAPI(
       "/cart?action=add",
@@ -257,12 +255,7 @@ class ProductItem extends Component {
     )
       .then((response) => {
         // console.log(response);
-        alert(
-          "Them gio hang thanh cong, gio hang cua ban dang chua " +
-            response.data[0].tongsohang +
-            "san pham\r\n Tong gia tri" +
-            response.data[0].tonggiatri
-        );
+        alert("Thêm vào giỏ hàng thành công");
       })
       .catch((e) => {
         console.log(e.response);
@@ -276,6 +269,7 @@ class ProductItem extends Component {
       currentPRprice: price,
       currentPRID: idProduct,
     });
+    console.log(idProduct, price);
     // check xem co toekn khong
     let token = localStorage.getItem("token");
     if (token == null) {
@@ -283,7 +277,7 @@ class ProductItem extends Component {
       this.toggleModalBox();
     } else {
       // show cai model box them vao gio hang thanh cong
-      this.addCartItem();
+      this.addCartItem(idProduct, price);
     }
   };
 
