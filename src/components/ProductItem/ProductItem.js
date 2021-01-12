@@ -21,7 +21,7 @@ class ProductItem extends Component {
 
   componentDidMount = () => {
     let searchValue = this.props.searchValue;
-    this.setState({ searchValue });
+    this.setState({ searchValue: searchValue });
     callAPI("/category", "GET", {})
       .then((response) => {
         this.setState({
@@ -323,7 +323,7 @@ class ProductItem extends Component {
           </div>
         </div>
         <div className="col-9">
-          <div>{this.autoFlashProduct(4, 4)}</div>
+          <div>{this.autoFlashProduct(20, 4)}</div>
         </div>
       </div>
     );

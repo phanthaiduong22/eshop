@@ -40,7 +40,7 @@ class Info extends Component {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     let token = localStorage.getItem("token");
     let reloadInfo = localStorage.getItem("reloadInfo");
     if (reloadInfo == 1) {
@@ -75,6 +75,7 @@ class Info extends Component {
             info.sex = true;
           }
           console.log(info);
+          this.setState({ oldPassword: info });
           this.setState({ userInfo: info });
         })
         .catch((err) => console.log(err));
@@ -111,9 +112,9 @@ class Info extends Component {
   };
 
   sendUserInfo = () => {
-    console.log(this.state.oldPassword);
-    console.log(this.state.newPassword);
-    console.log(this.state.confirmPassword);
+    // console.log(this.state.oldPassword);
+    // console.log(this.state.newPassword);
+    // console.log(this.state.confirmPassword);
     if (
       this.state.userInfo.password === this.state.oldPassword &&
       this.state.newPassword === this.state.confirmPassword
@@ -130,6 +131,8 @@ class Info extends Component {
 
   modUserInfo = () => {
     console.log("User info");
+    console.log(this.state.newPassword);
+    console.log(this.state.confirmPassword);
     if (this.state.token) {
       let data = this.state.userInfo;
       console.log(data);
@@ -144,8 +147,8 @@ class Info extends Component {
 
   handleSubmit = (e) => {
     console.log("Submitted");
-    this.sendUserInfo();
-    //e.preventDefault();
+    this.modUserInfo();
+    // e.preventDefault();
   };
 
   render() {
@@ -326,13 +329,12 @@ class Info extends Component {
                       <label for="text">Nhập mật khẩu cũ</label>
                       <input
                         type="password"
-                        onChange={this.handleChangePass}
+                        onChange={this.sendUserInfo}
                         class="form-control"
                         name="oldPassword"
                         id="oldPassword"
                       ></input>
                     </div>
-
                     <div className="form-group">
                       <label for="text">Nhập mật khẩu mới</label>
                       <input
@@ -341,10 +343,9 @@ class Info extends Component {
                         class="form-control"
                         name="newPassword"
                         id="newPassword"
-                        placeholder="Mat khau phai nhieu hon 6 ky tu"
+                        placeholder="Mật khẩu phải nhiều hơn 6 ký tự"
                       ></input>
                     </div>
-
                     <div className="form-group">
                       <label for="text">Nhập lại mật khẩu mới</label>
                       <input

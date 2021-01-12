@@ -76,7 +76,7 @@ class AddNewProduct extends Component {
       origin,
       stock,
       price,
-      cat,
+      cat: cat - 1,
       product_image,
     };
     if (
@@ -90,6 +90,7 @@ class AddNewProduct extends Component {
     )
       this.setState({ error: "Bạn phải điền tất cả các mục" });
     else {
+      console.log(description);
       let { token } = this.state;
       callAPI("/postproduct", "POST", product, token)
         .then((res) => {
