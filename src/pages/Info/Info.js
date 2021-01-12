@@ -75,7 +75,7 @@ class Info extends Component {
             info.sex = true;
           }
           console.log(info);
-          this.setState({ oldPassword: info });
+          //this.setState({ oldPassword: info });
           this.setState({ userInfo: info });
         })
         .catch((err) => console.log(err));
@@ -145,10 +145,54 @@ class Info extends Component {
     }
   };
 
+  checkPassword = () =>
+  {
+    let realpass = this.state.userInfo.password;
+    let oldpass = this.state.oldPassword;
+    let newpass = this.state.newPassword;
+    let confirmpass = this.state.confirmPassword;
+
+    console.log("old pass");
+    console.log(oldpass);
+    if (!oldpass)
+    {
+      console.log("Quaaa");
+    }
+    if (!oldpass && !newpass && !confirmpass)
+    {
+      return 0;
+    }
+
+    if (realpass != oldpass)
+    {
+      return 1; //Wrong old pass
+    }
+    if (newpass != confirmpass)
+    {
+      return 2; //Confim pass wrong
+    }
+    return 0;
+  }
+
   handleSubmit = (e) => {
-    console.log("Submitted");
-    this.modUserInfo();
-    // e.preventDefault();
+    const checkpass = this.checkPassword();
+    if ( checkpass === 0)
+    {
+      console.log("Submitted");
+      this.modUserInfo();
+      //e.preventDefault();
+    }
+    else
+    {
+      let mgs = "Mật khẩu cũ bị sai";
+      if (checkpass === 2)
+      {
+        mgs = "Mật khẩu nhập lại không đúng";
+      }
+
+      window.alert(mgs)
+      e.preventDefault();
+    }
   };
 
   render() {
@@ -329,7 +373,7 @@ class Info extends Component {
                       <label for="text">Nhập mật khẩu cũ</label>
                       <input
                         type="password"
-                        onChange={this.sendUserInfo}
+                        onChange={this.handleChangePass}
                         class="form-control"
                         name="oldPassword"
                         id="oldPassword"
