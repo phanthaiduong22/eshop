@@ -19,30 +19,45 @@ class CartInfo extends Component {
           <p style={{ display: "inline" }}>{" " + this.state.address}</p>
           <hr></hr>
           <h6>Thông tin đơn hàng</h6>
-          <div class="bg-light d-flex justify-content-between">
-            <div>Total Cost</div>
+          <div class="bg-light d-flex justify-content-between mt-3">
+            <div>Tổng tiền</div>
             <div>{this.props.totalCost}</div>
           </div>
-          <div class="bg-light d-flex justify-content-between">
-            <div>Transport Cost</div>
+          <div class="bg-light d-flex justify-content-between m">
+            <div>Phí vận chuyển</div>
             <div>{this.state.transportCost}</div>
           </div>
-          <div className="input-group mb-3">
+          <div className="input-group mb-3 mt-3">
             <input
               type="text"
               className="form-control"
-              placeholder="Coupon"
+              placeholder="Mã giảm giá"
             />
             <div className="input-group-append">
-              <input className="btn btn-outline-success" type="button" value="Apply"/>
+              <input
+                className="btn btn-outline-success"
+                type="button"
+                value="Áo dụng"
+              />
             </div>
           </div>
           <h6>Tổng cộng</h6>
           <hr></hr>
-          <div class="d-flex justify-content-center"><h4 style={{color:"red",margin:"auto"}}>{this.props.totalCost+this.state.transportCost+"đ"}</h4></div>
-<Link to="/checkout">
-<button type="button" name="" id="" class="btn btn-danger btn-lg btn-block">Tiếp tục</button>
-</Link>
+          <div class="d-flex justify-content-center">
+            <h4 style={{ color: "red", margin: "auto" }}>
+              {this.props.totalCost + this.state.transportCost + "đ"}
+            </h4>
+          </div>
+          <Link to="/checkout">
+            <button
+              type="button"
+              name=""
+              id=""
+              class="btn btn-danger btn-lg btn-block"
+            >
+              Tiếp tục
+            </button>
+          </Link>
         </div>
       </div>
     );

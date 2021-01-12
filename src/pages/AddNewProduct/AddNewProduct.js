@@ -3,6 +3,7 @@ import "./AddNewProduct.css";
 import Alert from "../../components/Alert/Alert";
 import callAPI from "../../utils/apiCaller";
 import SellerSideBar from "../../components/SellerSideBar/SellerSideBar";
+import { Redirect } from "react-router-dom";
 
 class AddNewProduct extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class AddNewProduct extends Component {
       product_image: "",
       cat: "",
       error: "",
+      redirect: "",
     };
   }
 
@@ -74,7 +76,7 @@ class AddNewProduct extends Component {
       origin,
       stock,
       price,
-      cat,
+      cat: cat - 1,
       product_image,
     };
     if (
@@ -88,10 +90,13 @@ class AddNewProduct extends Component {
     )
       this.setState({ error: "Bạn phải điền tất cả các mục" });
     else {
+      console.log(description);
       let { token } = this.state;
       callAPI("/postproduct", "POST", product, token)
         .then((res) => {
           console.log(res);
+          // this.setState({ error: "Bạn đã thêm sản phẩm thành công" });
+          this.setState({ redirect: "/sell/listproduct" });
         })
         .catch((err) => console.log(err));
       this.setState({ error: "" });
@@ -101,7 +106,11 @@ class AddNewProduct extends Component {
   render() {
     let showerror = null,
       listCategoryOption = null;
-    let { error, listCategory } = this.state;
+    let { error, listCategory, redirect } = this.state;
+    if (redirect) {
+      this.setState({ redirect: "" });
+      return <Redirect to={redirect} />;
+    }
     if (error) showerror = <Alert error={error} />;
 
     if (listCategory)
