@@ -7,6 +7,7 @@ import "react-day-picker/lib/style.css";
 import { DateUtils } from "react-day-picker";
 import dateFnsFormat from "date-fns/format";
 import dateFnsParse from "date-fns/parse";
+import MenuInfo from "../../components/Info/menuCom";
 
 // import { FormGroup, Button, FormControl, Form, ControlLabel } from "react-bootstrap";
 
@@ -221,49 +222,7 @@ class Info extends Component {
       <div className="container-fluid" style={{ backgroundColor: "#d9d9d9" }}>
         <div className="row ml-4 mt-3 mb-2 mr-4" id="bar">
           <div className="col-md-3" style={{ backgroundColor: "white" }}>
-            <button className="btn">
-              <i className="fa fa-user-circle fa-2x" aria-hidden="true"></i>
-              <strong> Thông tin khách hàng </strong>
-            </button>
-            <button className="btn">
-              <i className="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
-              <strong>
-                {" "}
-                Giỏ hàng
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </strong>
-            </button>
-            <button className="btn">
-              <i className="fa fa-bell fa-2x" aria-hidden="true"></i>
-              <strong>
-                {" "}
-                Thông báo
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              </strong>
-            </button>
-            <button className="btn">
-              <i className="fa fa-map-signs fa-2x" aria-hidden="true"></i>
-              <strong> Quản lý địa chỉ </strong>
-            </button>
-            <button
-              className="btn"
-              onClick={(e) => (window.location.href = "/orders")}
-            >
-              <i className="fa fa-money fa-2x" aria-hidden="true"></i>
-              <strong> Quản lý đơn hàng </strong>
-            </button>
-            <button className="btn">
-              <i className="fa fa-archive fa-2x" aria-hidden="true"></i>
-              <strong> Quản lý của hàng </strong>
-            </button>
-            <button className="btn">
-              <i className="fa fa-commenting fa-2x" aria-hidden="true"></i>
-              <strong> Nhận xét của tôi </strong>
-            </button>
-            <button className="btn">
-              <i className="fa fa-bookmark fa-2x" aria-hidden="true"></i>
-              <strong> Quản lý mã giảm giá </strong>
-            </button>
+            <MenuInfo></MenuInfo>
           </div>
           <div
             className="col-md ml-4 mr-4 pd-2"
