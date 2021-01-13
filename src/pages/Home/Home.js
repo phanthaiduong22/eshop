@@ -44,6 +44,9 @@ class Home extends Component {
       currentPRprice: 0,
       currentPRID: 0,
       soluong: 1,
+
+      // pivot
+      pivot :0,
     };
   }
 
@@ -206,8 +209,8 @@ class Home extends Component {
       rows.push(
         <div className="row">
           {this.auto1RowFlashProduct(
-            i * numProduct1row,
-            (i + 1) * numProduct1row
+            i * numProduct1row + 12*this.state.pivot,
+            (i + 1) * numProduct1row + + 12*this.state.pivot
           )}
         </div>
       );
@@ -364,8 +367,8 @@ class Home extends Component {
       rows.push(
         <div className="row">
           {this.auto1RowCommonProduct(
-            i * numProduct1row,
-            (i + 1) * numProduct1row
+            i * numProduct1row + 12*this.state.pivot,
+            (i + 1) * numProduct1row + 12*this.state.pivot
           )}
         </div>
       );
@@ -528,8 +531,49 @@ class Home extends Component {
         {this.autoFlashProduct(2, 6)}
         <br />
         {this.autoCommonProduct(2, 6)}
+        <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" onClick={()=>{this.redirect('-')} } type="button">Previous</a></li>
+          <li class="page-item"><a class="page-link" onClick={()=>{this.redirect('1')}} type="button">1</a></li>
+          <li class="page-item"><a class="page-link" onClick={()=>{this.redirect('2')}} type="button">2</a></li>
+          <li class="page-item"><a class="page-link" onClick={()=>{this.redirect('3')}} type="button">3</a></li>
+          <li class="page-item"><a class="page-link" onClick={()=>{this.redirect('+')}} type="button">Next</a></li>
+        </ul>
+      </nav>
       </div>
     );
+  }
+
+  redirect(a){
+
+    if(a==='-'){
+      this.setState(prevState => {
+        return {pivot: prevState >=1 ? prevState.pivot - 1 : 0}
+      })
+    }else if(a==='1'){
+      this.setState({
+        pivot : 1
+      })
+    }else if(a==='2'){
+      this.setState({
+        pivot : 2
+      })
+    }else if(a==='3'){
+      this.setState({
+        pivot : 3
+      })
+    }else if(a==='+'){
+      this.setState(prevState => {
+        return {pivot: prevState < 6 ? prevState.pivot + 1 : 6}
+      })
+    }
+
+    
+  }
+  congpivot(){
+    this.setState(prevState => {
+      return {pivot: prevState.pivot + 1}
+    })
   }
 
   onUsernameChange = (event) => {
