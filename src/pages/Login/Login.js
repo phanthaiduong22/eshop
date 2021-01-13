@@ -54,45 +54,45 @@ class Login extends Component {
     if (redirect) return <Redirect to={redirect} />;
     return (
       <form onSubmit={this.onSubmitSignIn} className="loginForm">
-        <h1>Login</h1>
+        <h1>Đăng nhập</h1>
         {showerror}
         <div className="container">
           <label>
-            <b>Username</b>
+            <b>Tên tài khoản</b>
           </label>
           <input
             type="text"
             onChange={this.onUsernameChange}
-            placeholder="Enter Username"
+            placeholder="Tên người dùng"
             className="logininput"
             required
           />
 
           <label>
-            <b>Password</b>
+            <b>Mật khẩu</b>
           </label>
           <input
             onChange={this.onPasswordChange}
             type="password"
-            placeholder="Enter Password"
+            placeholder="Mật khẩu"
             className="logininput"
             required
           />
 
           <button type="submit" className="login-btn">
-            Login
+            Đăng nhập
           </button>
         </div>
 
         <div className="container" style={{ backgroundColor: "#f1f1f1" }}>
           <Link to={"/"}>
             <button type="button" className="cancelbtn login-btn">
-              Cancel
+              Hủy
             </button>
           </Link>
 
           <span className="psw">
-            You don't have account? <a href="/register">Register?</a>
+            Chưa có tài khoản? <a href="/register">Đăng ký</a>
           </span>
           
         </div>

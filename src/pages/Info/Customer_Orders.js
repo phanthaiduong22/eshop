@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import MenuInfo from "../../components/Info/menuCom";
 import callAPI from "../../utils/apiCaller";
 import OrderList from "../SellerOrders/OrdersList";
 class Orders extends Component {
@@ -46,7 +47,15 @@ class Orders extends Component {
         console.log(orders);
       
         return(
-          <div className="container-fluid ">
+
+          <div className="container-fluid" style={{ backgroundColor: "#d9d9d9" }}>
+          <div className="row ml-4 mt-3 mb-2 mr-4" id="bar">
+            <div className="col-md-3" style={{ backgroundColor: "white" }}>
+              <MenuInfo></MenuInfo>
+            </div>
+            
+
+          <div className="col-md ml-4 mr-4 pd-2">
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">Danh sách đơn hàng</h4>
@@ -146,6 +155,8 @@ class Orders extends Component {
                 </div>
               </div>
             </div>
+          </div>
+          </div>
           </div>
         );
   }
