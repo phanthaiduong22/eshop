@@ -57,53 +57,53 @@ class Register extends Component {
       <div className="registerForm">
         <form onSubmit={this.onSubmitRegister}>
           <div className="container">
-            <h1>Register</h1>
+            <h1>Đăng ký</h1>
             <br />
 
             {showerror}
 
             <label>
-              <b>Username</b>
+              <b>Tên tài khoản</b>
             </label>
             <input
               onChange={this.onUsernameChange}
               type="text"
-              placeholder="Enter Username"
+              placeholder="Tên tài khoản"
               id="username"
               required
             />
 
             <label>
-              <b>Password</b>
+              <b>Mật khẩu</b>
             </label>
             <input
               onChange={this.onPasswordChange}
               type="password"
-              placeholder="Enter Password"
+              placeholder="Mật khẩu"
               id="psw"
               required
             />
 
             <label>
-              <b>Repeat Password</b>
+              <b>Nhập lại mật khẩu</b>
             </label>
             <input
               onChange={this.onRepeatPasswordChange}
               type="password"
-              placeholder="Repeat Password"
+              placeholder="Nhập lại mật khẩu"
               id="psw-repeat"
               required
             />
             <br />
 
             <button type="submit" className="registerbtn">
-              Register
+              Đăng ký
             </button>
           </div>
 
           <div className="container signin">
             <p>
-              Already have an account? <Link to={"/login"}>Sign in</Link>.
+              Đã có tài khoản? <Link to={"/login"}>Đăng nhập</Link>.
             </p>
           </div>
         </form>
